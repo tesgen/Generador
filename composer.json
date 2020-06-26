@@ -1,8 +1,13 @@
 {
     "name": "tesgen/generador",
-    "description": ":description",
-    "license": "license",
+    "description": "Generador codigo laravel",
+    "license": "MIT",
     "authors": [
+        {
+            "name": "Ariel Oribe",
+            "email": "marcosarieloribe993@gmail.com",
+            "homepage": "https://github.com/tesgen/testpackage"
+        }
     ],
     "homepage": "https://github.com/tesgen/generador",
     "keywords": ["Laravel", "Generador"],

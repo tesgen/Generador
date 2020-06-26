@@ -1624,7 +1624,7 @@
         },
         {
             "name": "symfony/mime",
-            "version": "v4.3.6",
+            "version": "v4.4.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/mime.git",

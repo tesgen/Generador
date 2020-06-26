@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class RoleCreateRequest extends FormRequest {
+
+    public function rules() {
+
+        return [
+            'name' => "required|max:255|unique:roles,name",
+        ];
+    }
+
+    public function messages() {
+        return [
+            'name.required' => 'El campo Nombre Rol es obligatorio.',
+            'name.max' => 'El campo Nombre Rol debe ser máximo 255.',
+            'name.unique' => 'El dato ingresado para Nombre Rol ya existe.',
+        ];
+    }
+}

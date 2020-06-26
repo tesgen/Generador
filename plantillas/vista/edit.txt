@@ -1,0 +1,109 @@
+@extends('layouts.app')
+
+@section('content')
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{route('$NOMBRE_TABLA$.index')}}">$NOMBRE_PLURAL$</a>
+        </li>
+        <li class="breadcrumb-item active">Actualizar</li>
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fa fa-edit fa-lg"></i>
+                            <strong>Actualizar $NOMBRE_NATURAL$</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="alert alert-danger alert-dismissible fade show print-error-msg"
+                                 style="display:none">
+                                <ul></ul>
+                                <button type="button" onclick="$('.print-error-msg').hide()" class="close"
+                                        aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form id="form" action="{{url('/$NOMBRE_TABLA$')}}" method="POST">
+$CAMPOS_INPUT_HTML$$TABLA_DETALLE$
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@endsection
+
+@section('scripts')
+
+    <script type="text/javascript" src="{{asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+
+    {!! JsValidator::formRequest('App\Http\Requests\$NOMBRE_CLASE$UpdateRequest', '#form'); !!}
+
+    <script>
+
+        $(function () {
+$CONF_DATE_TIME_PICKER$$ON_READY$
+        });
+
+$FUNCIONES_PARA_FORMULA$        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': '{{csrf_token()}}'
+            }
+        });
+
+        $(function () {
+
+            $("#boton_submit").click(function (ev) {
+
+                ev.preventDefault();
+
+                var frm = $("#form");
+
+                if (!frm.valid()) {
+                    mostrarMensajeAdvertencia('Debes rellenar los campos de $NOMBRE_NATURAL$ correctamente', 0, null);
+                    return;
+                }
+
+                var datos = {
+$CAMPOS_PARA_AJAX$                };
+
+                $.ajax({
+                    type: 'PUT',
+                    data: datos,
+                    url: "{{url('/$NOMBRE_TABLA$/'. $$NOMBRE_TABLA$->$CLAVE_PRIMARIA$) }}",
+                    beforeSend: function () {
+                        $('#spinnerModal').show();
+                    },
+                    success: function (data) {
+                        $('#spinnerModal').hide();
+                        mostrarMensajeExito('Actualizado correctamente', 1000, "{{url('/$NOMBRE_TABLA$')}}");
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        $('#spinnerModal').hide();
+                        printErrorMsg(error.responseJSON.errors);
+                        mostrarMensajeError('Error al actualizar', 2000, null);
+                    }
+                });
+
+            });
+        });
+
+        function printErrorMsg(msg) {
+            $(".print-error-msg").find("ul").html('');
+            // $(".print-error-msg").css('display', 'block');
+            $('.print-error-msg').show();
+            $.each(msg, function (key, value) {
+                $(".print-error-msg").find("ul").append('<li>' + value + '</li>');
+            });
+        }
+
+    </script>
+
+@endsection

@@ -1,0 +1,41 @@
+<?php
+
+namespace $NAME_SPACE$;
+
+$IMPORTS$
+
+class $NOMBRE_MODELO$Controller extends Controller {
+
+    public function index() {
+        $lista_$NOMBRE_TABLA$ = $NOMBRE_MODELO$::all();
+        return view('$NOMBRE_TABLA$.index')->with('lista_$NOMBRE_TABLA$', $lista_$NOMBRE_TABLA$);
+    }
+
+    public function create() {
+$QUERY_TABLAS_FORANEAS$        return view('$NOMBRE_TABLA$.create')$WITHS$;
+    }
+
+    public function store($NOMBRE_MODELO$CreateRequest $request) {
+$CONTENIDO_STORE$        return response()->json(true);
+    }
+
+    public function show($id) {
+$QUERY_TABLAS_FORANEAS$        $$NOMBRE_TABLA$ = $NOMBRE_MODELO$::$WITH_SHOW$find($id);
+        return view('$NOMBRE_TABLA$.show')->with('$NOMBRE_TABLA$', $$NOMBRE_TABLA$)$WITHS$;
+    }
+
+    public function edit($id) {
+$QUERY_TABLAS_FORANEAS$        $$NOMBRE_TABLA$ = $NOMBRE_MODELO$::find($id);
+        return view('$NOMBRE_TABLA$.edit')->with('$NOMBRE_TABLA$', $$NOMBRE_TABLA$)$WITHS$;
+    }
+
+    public function update($NOMBRE_MODELO$UpdateRequest $request, $id) {
+$CONTENIDO_UPDATE$        return response()->json(true);
+    }
+
+    public function destroy($id) {
+        $NOMBRE_MODELO$::find($id)->delete();
+        return redirect('/$NOMBRE_TABLA$');
+    }
+
+}

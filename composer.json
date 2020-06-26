@@ -1,0 +1,39 @@
+{
+    "name": "tesgen/generador",
+    "description": ":description",
+    "license": "license",
+    "authors": [
+    ],
+    "homepage": "https://github.com/tesgen/generador",
+    "keywords": ["Laravel", "Generador"],
+    "require": {
+        "illuminate/support": "~5",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~7.0",
+        "mockery/mockery": "^1.1",
+        "orchestra/testbench": "~3.0",
+        "sempro/phpunit-pretty-print": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "TesGen\\Generador\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "TesGen\\Generador\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "TesGen\\Generador\\GeneradorServiceProvider"
+            ],
+            "aliases": {
+                "Generador": "TesGen\\Generador\\Facades\\Generador"
+            }
+        }
+    }
+}

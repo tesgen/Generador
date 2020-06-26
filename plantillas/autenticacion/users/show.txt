@@ -1,0 +1,42 @@
+@extends('layouts.app')
+
+@section('content')
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{!! route('users.index') !!}">Usuarios</a>
+        </li>
+        <li class="breadcrumb-item active">Datos</li>
+    </ol>
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fa fa-eye fa-lg"></i>
+                            <strong>Datos de Usuario</strong>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered table-striped">
+                                <tbody>
+								<tr>
+									<th>ID</th>
+									<td>{{$users->id}}</td>
+								</tr>
+								<tr>
+									<th>Rol</th>
+									<td>{{$users->role->name}}</td>
+								</tr>
+								<tr>
+									<th>Nombre</th>
+									<td>{{$users->username}}</td>
+								</tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection

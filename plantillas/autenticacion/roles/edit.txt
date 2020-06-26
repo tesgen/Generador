@@ -1,0 +1,177 @@
+@extends('layouts.app')
+
+@section('content')
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{route('roles.index')}}">Roles</a>
+        </li>
+        <li class="breadcrumb-item active">Actualizar</li>
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fa fa-edit fa-lg"></i>
+                            <strong>Actualizar Rol</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="alert alert-danger alert-dismissible fade show print-error-msg"
+                                 style="display:none">
+                                <ul></ul>
+                                <button type="button" onclick="$('.print-error-msg').hide()" class="close"
+                                        aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form id="form" action="{{url('/roles')}}" method="POST">
+                                <div class="form-group col-sm-12">
+                                    <label for="name">Nombre Rol:</label>
+                                    <input class="form-control" name="name"
+                                           value="{{$rol->name ?? ''}}" type="text" id="name">
+                                </div>
+                                <div class="form-group col-sm-12">
+                                    <h5 class="text-center">Permisos</h5>
+                                    <table id="tabla_permisos" class="table table-responsive-sm table-striped table-sm">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Tabla</th>
+                                            <th>Seleccionado</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="tabla_permisos_body">
+                                        @foreach($permisos as $item)
+                                            <tr>
+                                                <td>{{$item->id}}</td>
+                                                <td>{{$item->description}}</td>
+                                                <td><input type="checkbox" class="checkBoxPermiso" id="checkBoxPermiso">
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                <div class="form-group col-sm-12">
+                                    <button type="submit" form="form" id="boton_submit" class="btn btn-primary">
+                                        Aceptar
+                                    </button>
+                                    <a href="{{url('roles')}}" class="btn btn-default">Cancelar</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@endsection
+
+@section('scripts')
+
+    <script type="text/javascript" src="{{asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+
+    {!! JsValidator::formRequest('App\Http\Requests\RoleUpdateRequest', '#form'); !!}
+
+    <script>
+
+        var permisosDeRol;
+
+        $(function () {
+            var permisosString = '{!! $rol->permissions !!}';
+
+            var re = /\\/g;
+
+            permisosString = permisosString.replace(re, ".");
+
+            permisosDeRol = JSON.parse(permisosString);
+
+            seleccionarPermisos();
+        });
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': '{{csrf_token()}}'
+            }
+        });
+
+        function seleccionarPermisos() {
+            var table = document.getElementById("tabla_permisos_body");
+            for (var i = 0, row; (row = table.rows[i]); i++) {
+                for (var j = 0; j < permisosDeRol.length; j++) {
+                    if (permisosDeRol[j].id === parseInt(row.cells[0].innerText)) {
+                        row.cells[2].childNodes[0].checked = true;
+                        break;
+                    }
+                }
+
+            }
+        }
+
+        $(function () {
+
+            $("#boton_submit").click(function (ev) {
+
+                ev.preventDefault();
+
+                var table = document.getElementById("tabla_permisos_body");
+
+                var permisosSeleccionados = [];
+
+                for (var i = 0, row; (row = table.rows[i]); i++) {
+                    if (row.cells[2].childNodes[0].checked) {
+                        permisosSeleccionados.push(row.cells[0].innerText)
+                    }
+                }
+
+                var frm = $("#form");
+
+                if (!frm.valid()) {
+                    mostrarMensajeAdvertencia('Debes rellenar los campos de Rol correctamente', 0, null);
+                    return;
+                }
+
+                var datos = {
+                    name: $("#name").val(),
+                    permissions: permisosSeleccionados
+                };
+
+                $.ajax({
+                    type: 'PUT',
+                    data: datos,
+                    url: "{{url('/roles/'. $rol->id) }}",
+                    beforeSend: function () {
+                        $('#spinnerModal').show();
+                    },
+                    success: function (data) {
+                        $('#spinnerModal').hide();
+                        mostrarMensajeExito('Actualizado correctamente', 1000, "{{url('/roles')}}");
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        $('#spinnerModal').hide();
+                        printErrorMsg(error.responseJSON.errors);
+                        mostrarMensajeError('Error al actualizar', 2000, null);
+                    }
+                });
+
+            });
+        });
+
+        function printErrorMsg(msg) {
+            $(".print-error-msg").find("ul").html('');
+            // $(".print-error-msg").css('display', 'block');
+            $('.print-error-msg').show();
+            $.each(msg, function (key, value) {
+                $(".print-error-msg").find("ul").append('<li>' + value + '</li>');
+            });
+        }
+
+    </script>
+
+@endsection

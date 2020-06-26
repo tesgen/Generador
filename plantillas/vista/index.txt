@@ -1,0 +1,49 @@
+@extends('layouts.app')
+
+@section('styles')
+    @include('layouts.css.datatables')
+    <link rel="stylesheet" href="{{asset('css/datatables/estilo.css')}}">
+@endsection
+
+@section('content')
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">$NOMBRE_PLURAL$</li>
+    </ol>
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fa fa-align-justify"></i>
+                            <strong>Lista de $NOMBRE_PLURAL$</strong>
+                            <a class="pull-right" href="{{url('$NOMBRE_TABLA$/create')}}"><i
+                                        class="fa fa-plus-square fa-lg"></i> Crear</a>
+                        </div>
+                        <div class="card-body">
+$TABLA_HTML$
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('scripts')
+
+    @include('layouts.js.datatables')
+
+    <script>
+        var tituloReporte = 'Lista de $NOMBRE_PLURAL$';
+        var columnasVisiblesReporte = [$COLUMNAS_VISIBLES_REPORTE$];
+
+        $('.eliminar').click(function(e){
+            confirmarEliminar(e);
+        });
+    </script>
+
+    <script src="{{asset('js/datatable.js')}}"></script>
+
+@endsection
+

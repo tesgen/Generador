@@ -1,0 +1,12 @@
+$TITULO_TABLA$                            <table id="tabla" class="table table-responsive-sm table-striped table-sm">
+                                <thead>
+                                <tr>
+$CABECERAS_TABLA$                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($LISTA_FOR_EACH$ as $item)
+                                    <tr>
+$FILAS_TABLA$                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>

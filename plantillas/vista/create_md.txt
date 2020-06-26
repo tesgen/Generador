@@ -1,0 +1,203 @@
+@extends('layouts.app')
+
+@section('content')
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{ route('$NOMBRE_TABLA$.index') }}">$NOMBRE_PLURAL$</a>
+        </li>
+        <li class="breadcrumb-item active">Crear</li>
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fa fa-plus-square-o fa-lg"></i>
+                            <strong>Crear $NOMBRE_NATURAL$</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="card">
+                                <div class="card-header">
+                                    Datos de $NOMBRE_NATURAL$
+                                </div>
+                                <div class="card-body">
+                                    <div class="alert alert-danger alert-dismissible fade show print-error-msg"
+                                         style="display:none">
+                                        <ul></ul>
+                                        <button type="button" onclick="$('.print-error-msg').hide()" class="close"
+                                                aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form id="form" action="{{url('/$NOMBRE_TABLA$')}}" method="POST">
+$CAMPOS_MAESTRO$                                    </form>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    Datos de $NOMBRE_NATURAL_AUXILIAR$
+                                </div>
+                                <div class="card-body">
+                                    <form action="#" id="formDetalle" onsubmit="return false">
+$CAMPOS_AUXILIAR$
+                                        <div class="form-group col-sm-12">
+                                            <button form="formDetalle" class="btn btn-success"
+                                                    id="btnAgregarDetalle">Agregar
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    Lista de $NOMBRE_PLURAL_AUXILIAR$
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group col-sm-12">
+                                        <table id="tabla" class="table table-responsive-sm table-striped table-sm">
+                                            <thead>
+                                            <tr>
+$CABECERA_TABLA_DETALLE$                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <button type="submit" form="form" id="boton_submit" class="btn btn-primary">Guardar</button>
+                                <a href="{{url('/$NOMBRE_TABLA$')}}" class="btn btn-default">Cancelar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@endsection
+
+@section('scripts')
+
+    <script type="text/javascript" src="{{asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+
+    {!! JsValidator::formRequest('App\Http\Requests\$NOMBRE_CLASE$CreateRequest', '#form'); !!}
+    {!! JsValidator::formRequest('App\Http\Requests\$NOMBRE_CLASE_DETALLE$CreateRequest', '#formDetalle'); !!}
+
+    <script>
+
+        $(function () {
+$CONF_DATE_TIME_PICKER$$ON_READY$$ON_READY_DETALLE$        });
+
+$FUNCIONES_PARA_FORMULA$$FUNCIONES_PARA_FORMULA_DETALLE$        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': '{{csrf_token()}}'
+            }
+        });
+
+        var detalles = [];
+
+        $(function () {
+
+            $("#btnAgregarDetalle").click(function () {
+
+                var formDetalle = $("#formDetalle");
+
+                if (!formDetalle.valid()) {
+                    mostrarMensajeAdvertencia('Debes rellenar los campos de $NOMBRE_NATURAL_AUXILIAR$ correctamente', 0, null);
+                    return;
+                }
+
+$DEFINICION_VARIABLES_JS_DETALLE$
+                var detalle = {
+$ASIGNACION_VARIABLES_JS_DETALLE$
+                };
+
+                detalles.push(detalle);
+                actualizarDetalle();
+                limpiarCamposDetalle();
+            });
+        });
+
+        function actualizarDetalle() {
+            var tbody = $("#tabla tbody");
+            tbody.html("");
+            for (var i = 0; i < detalles.length; i++) {
+                var nuevaFila = "" +
+                    "<tr>" +
+$FILAS_TABLA_DETALLE$                    "</tr>";
+                tbody.append(nuevaFila);
+            }
+        }
+
+        function limpiarCamposDetalle() {
+$CONTENIDO_LIMPIAR_CAMPOS_DETALLE$
+            $('#formDetalle :input').each(function() {
+                $(this).removeClass("is-valid");
+            });
+        }
+
+        $(function () {
+
+            $("#boton_submit").click(function (ev) {
+
+                ev.preventDefault();
+
+                var frm = $("#form");
+
+                if (!frm.valid()) {
+                    mostrarMensajeAdvertencia('Debes rellenar los campos de Venta correctamente', 0, null);
+                    return;
+                }
+
+                var $NOMBRE_TABLA$ = {
+$ASIGNACION_VARIABLES_JS_MAESTRO$
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{url('/$NOMBRE_TABLA$')}}',
+                    data: $NOMBRE_TABLA$,
+                    beforeSend: function () {
+                        $('#spinnerModal').show();
+                    },
+                    success: function (data) {
+                        console.log('Guardado correctamente $NOMBRE_TABLA$ ' + data);
+                        $('#spinnerModal').hide();
+                        mostrarMensajeExito('Guardado correctamente', 1000, "{{url('/$NOMBRE_TABLA$')}}");
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        $('#spinnerModal').hide();
+                        printErrorMsg(error.responseJSON.errors);
+                        //mostrarMensajeError('Error al guardar', 2000, null);
+                    }
+                });
+
+            });
+
+        });
+
+        function printErrorMsg(msg) {
+            if (msg === undefined) {
+                mostrarMensajeError('Error al guardar', 2000, null);
+                return;
+            } else {
+                mostrarMensajeError('Debes rellenar los campos de $NOMBRE_NATURAL$ correctamente', 2000, null);
+            }
+            $(".print-error-msg").find("ul").html('');
+            // $(".print-error-msg").css('display', 'block');
+            $('.print-error-msg').show();
+            $.each(msg, function (key, value) {
+                $(".print-error-msg").find("ul").append('<li>' + value + '</li>');
+            });
+        }
+
+    </script>
+
+@endsection

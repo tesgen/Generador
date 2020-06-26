@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class UserUpdateRequest extends FormRequest {
+
+    public function rules() {
+        $id = intval($this->user);
+        return [
+            'role_id' => "required",
+            'username' => "required|min:$LONGITUD_MINIMA_USUARIO$|max:$LONGITUD_MAXIMA_USUARIO$|unique:users,username,$id,id",
+        ];
+    }
+
+    public function messages() {
+        return [
+            'role_id.required' => 'El campo Rol es obligatorio.',
+            'username.required' => 'El campo Nombre de Usuario es obligatorio.',
+            'username.min' => 'El campo Nombre de Usuario debe ser mínimo $LONGITUD_MINIMA_USUARIO$.',
+            'username.max' => 'El campo Nombre de Usuario debe ser máximo $LONGITUD_MAXIMA_USUARIO$.',
+            'username.unique' => 'El dato ingresado para Nombre de Usuario ya existe.',
+        ];
+    }
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Login</title>
+    <!-- Bootstrap-->
+    <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{asset('css/coreui.min.css')}}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="{{asset('css/font-awesome-4.4.7.css')}}">
+    <link rel="stylesheet" href="{{asset('css/simple-line-icons-2.4.1.css')}}">
+    <link rel="stylesheet" href="{{asset('css/flag-icon.min-3.3.0.css')}}">
+</head>
+<body class="app flex-row align-items-center">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card-group">
+                <div class="card p-4">
+                    <div class="card-body">
+                        <form method="post" action="{{ url('/login') }}">
+                            {!! csrf_field() !!}
+                            <h1>Login</h1>
+                            <p class="text-muted">Ingresa los datos de tu usuario</p>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                      <i class="icon-user"></i>
+                                    </span>
+                                </div>
+                                <input id="username" type="text" placeholder="Nombre de Usuario"
+                                       class="form-control @error('username') is-invalid @enderror" name="username"
+                                       value="{{ old('username') }}" required autocomplete="username" autofocus>
+
+                                @error('username')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="input-group mb-4">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                      <i class="icon-lock"></i>
+                                    </span>
+                                </div>
+                                <input id="password" type="password" placeholder="Contraseña"
+                                       class="form-control @error('password') is-invalid @enderror" name="password"
+                                       required autocomplete="current-password">
+
+                                @error('password')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <button type="submit" class="btn btn-primary px-4">
+                                        {{ __('Login') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{asset('js/coreui/jquery-3.4.1.min.js')}}"></script>
+<script src="{{asset('js/coreui/popper-1.14.7.js')}}"></script>
+<script src="{{asset('js/coreui/bootstrap-4.3.1.js')}}"></script>
+<script src="{{asset('js/coreui/coreui.js')}}"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<?php
+
+namespace $NAME_SPACE$;
+
+use Illuminate\Database\Eloquent\Model;
+
+/**
+ *
+ * @mixin \Eloquent
+ */
+class $NOMBRE_MODELO$ extends Model {
+
+    protected $table = '$NOMBRE_TABLA$';
+
+    protected $primaryKey = '$CLAVE_PRIMARIA$';
+
+    public $timestamps = $TIME_STAMPS$;
+
+    protected $fillable = [$CAMPOS_FILLABLE$];
+
+    protected $appends = array('campo_referente');
+$BELONGS_TO$$HASMANY$
+    public function getCampoReferenteAttribute() {
+        return "$CAMPO_REFERENTE$";
+    }
+}

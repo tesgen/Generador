@@ -1,0 +1,74 @@
+<?php
+
+namespace $NAME_SPACE$;
+
+$IMPORTS$
+use Illuminate\Http\Request;
+use Validator;
+
+class $NOMBRE_MODELO$Controller extends BaseApiController{
+
+    public function index() {
+        $lista_$NOMBRE_TABLA$ = $NOMBRE_MODELO$::all();
+        return $this->sendResponse($lista_$NOMBRE_TABLA$, 'Lista de $NOMBRE_PLURAL$');
+    }
+
+    public function store(Request $request) {
+
+        $rules = [
+$CONTENIDO_RULES_STORE$        ];
+
+        $messages = [
+$CONTENIDO_MESSAGES_STORE$        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return $this->sendError($validator->errors(), 'Debes rellenar los datos de $NOMBRE_NATURAL$ correctamente', 400);
+        }
+
+$CONTENIDO_STORE$        return $this->sendResponse($$NOMBRE_TABLA$->toArray(), '$NOMBRE_NATURAL$ guardado correctamente');
+    }
+
+    public function show($id) {
+
+        $$NOMBRE_TABLA$ = $NOMBRE_MODELO$::$WITH_SHOW$find($id);
+
+        if (is_null($$NOMBRE_TABLA$)) {
+            return $this->sendError([], '$NOMBRE_NATURAL$ no encontrado', 400);
+        }
+
+        return $this->sendResponse($$NOMBRE_TABLA$->toArray(), 'Datos de $NOMBRE_NATURAL$ ' . $id);
+    }
+
+    public function update(Request $request, $id) {
+
+        $rules = [
+$CONTENIDO_RULES_UPDATE$        ];
+
+        $messages = [
+$CONTENIDO_MESSAGES_UPDATE$        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return $this->sendError($validator->errors(), 'Debes rellenar los datos de $NOMBRE_NATURAL$ correctamente', 400);
+        }
+
+$CONTENIDO_UPDATE$
+        return $this->sendResponse($$NOMBRE_TABLA$->toArray(), '$NOMBRE_NATURAL$ actualizado correctamente');
+    }
+
+    public function destroy($id) {
+
+        $$NOMBRE_TABLA$ = $NOMBRE_MODELO$::find($id);
+
+        if (is_null($$NOMBRE_TABLA$)) {
+            return $this->sendError([], '$NOMBRE_NATURAL$ no encontrado', 400);
+        }
+
+        $$NOMBRE_TABLA$->delete();
+        return $this->sendResponse([], '$NOMBRE_NATURAL$ eliminado correctamente');
+    }
+
+}

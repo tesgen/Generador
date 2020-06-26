@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Http\Controllers\API;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class UserController extends BaseApiController {
+
+    public function login() {
+
+        if (Auth::attempt(['username' => request('username'), 'password' => request('password')])) {
+
+            $user = Auth::user();
+            $success['token'] = $user->createToken('MyApp')->accessToken;
+
+            return $this->sendResponse($success, 'Iniciado sesión correctamente');
+
+        } else {
+            return $this->sendError([], 'Error al iniciar sesión', 401);
+        }
+    }
+
+    public function logout(Request $request) {
+
+        $isUser = $request->user()->token()->revoke();
+
+        if ($isUser) {
+            return $this->sendResponse([], 'Cerrado sesión correctamente');
+        } else {
+            return $this->sendError([], 'Error al cerrar sesión');
+        }
+
+    }
+}

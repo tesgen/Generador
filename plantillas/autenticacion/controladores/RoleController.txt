@@ -1,0 +1,75 @@
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\RoleCreateRequest;
+use App\Http\Requests\RoleUpdateRequest;
+use App\Permission;
+use App\Role;
+
+class RoleController extends Controller {
+
+    public function index() {
+        $lista_roles = Role::all();
+        return view('roles.index')->with('lista_roles', $lista_roles);
+    }
+
+    public function create() {
+        $pemisos = Permission::all();
+        return view('roles.create')->with('permisos', $pemisos);
+    }
+
+    public function store(RoleCreateRequest $request) {
+
+        $datos = $request->all();
+
+        $rol = new Role();
+        $rol->fill($datos);
+        $rol->save();
+
+        if (isset($datos['permissions'])) {
+
+            $permission_ids = $datos['permissions'];
+
+            $rol->permissions()->attach($permission_ids);
+        }
+        return response()->json(true);
+    }
+
+    public function show($id) {
+        $rol = Role::find($id);
+        return view('roles.show')->with('rol', $rol);
+    }
+
+    public function edit($id) {
+        $rol = Role::find($id);
+        $pemisos = Permission::all();
+        return view('roles.edit')->with('rol', $rol)->with('permisos', $pemisos);
+    }
+
+    public function update(RoleUpdateRequest $request, $id) {
+
+        $role = Role::where('id', $id)->first();
+
+        $datos = $request->all();
+
+        $role->fill($datos);
+        $role->save();
+
+        if (isset($datos['permissions'])) {
+
+            $permission_ids = $datos['permissions'];
+
+            Role::find($id)->permissions()->sync($permission_ids);
+        }
+
+        return response()->json(true);
+    }
+
+    public function destroy($id) {
+        Role::find($id)->delete();
+        return redirect('/roles');
+    }
+
+}

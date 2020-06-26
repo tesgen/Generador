@@ -145,7 +145,6 @@ class Mapeador {
                     'ordenTablaHtml' => $ordenTablaHtml++,
                     'jsonInputGuardar' => $jsonInput,
                     'jsonInputActualizar' => $jsonInput,
-                    'formActualizarIgualQueGuardar' => true,
 
                     'validacionesGuardar' => array(
                         'requerido' => false,
@@ -191,6 +190,7 @@ class Mapeador {
                 'generarApi' => false,
                 'jsonInputsGuardarAuxiliar' => [],
                 'jsonInputsActualizarAuxiliar' => [],
+                'formActualizarIgualQueGuardar' => true
             );
 
         }

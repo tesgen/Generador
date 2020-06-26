@@ -519,12 +519,14 @@ class BaseController extends Controller {
 
     public function obtenerTablaActual($nombreTabla): Tabla {
 
+        $tabla = new Tabla();
+
         foreach ($this->tablas as $t) {
             if ($t->getNombreTabla() === $nombreTabla) {
-                return $t;
+                $tabla = $t;
             }
         }
-        return null;
+        return $tabla;
     }
 
     public function establecerDatosTablas(): void {

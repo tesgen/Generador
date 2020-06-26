@@ -1,0 +1,31 @@
+
+.form-control {
+    width: 230px !important;
+    border-color: #b2c5ff;
+}
+
+.flexcontent {
+    float: right;
+    /*padding-bottom: 10px;*/
+}
+
+div.dataTables_wrapper div.dataTables_filter {
+    /*text-align: left;*/
+}
+
+.selectTable {
+    color: #fff;
+    background-color: #4682b4;
+    border-color: #4682b4;
+}
+
+.selectTable:hover {
+    color: #fff;
+    background-color: #315f86;
+    border-color: #545b62;
+}
+
+.inline {
+    display: inline-block;
+    padding: 0;
+}

@@ -57,7 +57,9 @@ class GeneradorServiceProvider extends ServiceProvider {
         // Publishing the configuration file.
         $this->publishes([
             __DIR__ . '/../config/generador.php' => config_path('generador.php'),
-        ], 'generador.config');
+            __DIR__ . '/../archivos/app/Http/Controllers/HomeController.php' =>
+                app_path('Http/Controllers/HomeController.php'),
+        ], 'generador.archivos');
 
         // Publishing the views.
         /*$this->publishes([

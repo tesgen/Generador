@@ -1,0 +1,10 @@
+    <script src="{{asset('js/datatables/jquery.dataTables-1.10.19.js')}}"></script>
+    <script src="{{asset('js/datatables/dataTables.bootstrap4-1.10.19.js')}}"></script>
+    <script src="{{asset('js/datatables/dataTables.buttons-1.5.2.js')}}"></script>
+    <script src="{{asset('js/datatables/buttons.bootstrap4-1.5.2.js')}}"></script>
+    <script src="{{asset('js/datatables/jszip-3.1.3.js')}}"></script>
+    <script src="{{asset('js/datatables/pdfmake-0.1.36.js')}}"></script>
+    <script src="{{asset('js/datatables/vfs_fonts-0.1.36.js')}}"></script>
+    <script src="{{asset('js/datatables/buttons.html5-1.5.2.js')}}"></script>
+    <script src="{{asset('js/datatables/dataTables.responsive-2.2.3.js')}}"></script>
+    <script src="{{asset('js/datatables/responsive.bootstrap4-2.2.3.js')}}"></script>

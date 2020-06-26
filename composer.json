@@ -13,7 +13,9 @@
     "keywords": ["Laravel", "Generador"],
     "require": {
         "illuminate/support": "~5",
-        "ext-json": "*"
+        "ext-json": "*",
+        "doctrine/dbal": "^2.9",
+        "proengsoft/laravel-jsvalidation": "^2.4.0"
     },
     "require-dev": {
         "phpunit/phpunit": "~7.0",

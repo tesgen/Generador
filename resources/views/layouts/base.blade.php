@@ -45,7 +45,7 @@
 {{--                </li>--}}
                 <li class="nav-item">
                     <a class="nav-link" href="{{url('/generador/crud2')}}">
-                        <i class="nav-icon icon-cursor"></i><span>CRUD 2</span>
+                        <i class="nav-icon icon-cursor"></i><span>CRUD</span>
                     </a>
                 </li>
 {{--                <li class="nav-item">--}}
@@ -55,7 +55,7 @@
 {{--                </li>--}}
                 <li class="nav-item">
                     <a class="nav-link" href="{{url('/generador/md2')}}">
-                        <i class="nav-icon icon-cursor"></i><span>Maestro-Detalle 2</span>
+                        <i class="nav-icon icon-cursor"></i><span>Maestro-Detalle</span>
                     </a>
                 </li>
                 <li class="nav-item">

@@ -1,7 +1,7 @@
 @extends('tesgen::layouts.vista_base')
 
 @section('titulo')
-    Generador CRUD 2
+    Generador CRUD
 @endsection
 @section('contenido_propio')
 

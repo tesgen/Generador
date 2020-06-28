@@ -88,6 +88,7 @@
             if (!autenticacion_json_string.generado) {
                 mostrarMensajeError('La autenticación aun no ha sido generada, ' +
                     'no puede generarse los permisos', 0, null);
+                return;
             }
 
             var tableBody = $("#tablaPermisosBody")[0];

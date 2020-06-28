@@ -20,6 +20,7 @@ class GeneradorServiceProvider extends ServiceProvider {
         if ($this->app->runningInConsole()) {
             $this->bootForConsole();
         }
+        app('router')->aliasMiddleware('RolesAuth', \App\Http\Middleware\RolesAuth::class);
     }
 
     /**
@@ -34,8 +35,7 @@ class GeneradorServiceProvider extends ServiceProvider {
         $this->app->singleton('generador', function ($app) {
             return new Generador;
         });
-        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-        $loader->alias('RolesAuth', '\App\Http\Middleware\RolesAuth::class');
+
     }
 
     /**

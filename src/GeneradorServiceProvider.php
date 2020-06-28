@@ -34,6 +34,8 @@ class GeneradorServiceProvider extends ServiceProvider {
         $this->app->singleton('generador', function ($app) {
             return new Generador;
         });
+        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+        $loader->alias('RolesAuth', '\App\Http\Middleware\RolesAuth::class');
     }
 
     /**

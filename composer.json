@@ -39,7 +39,8 @@
                 "TesGen\\Generador\\GeneradorServiceProvider"
             ],
             "aliases": {
-                "Generador": "TesGen\\Generador\\Facades\\Generador"
+                "Generador": "TesGen\\Generador\\Facades\\Generador",
+                "RolesAuth": "App\\Http\\Middleware\\RolesAuth"
             }
         }
     }

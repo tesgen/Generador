@@ -20,7 +20,6 @@ class GeneradorServiceProvider extends ServiceProvider {
         if ($this->app->runningInConsole()) {
             $this->bootForConsole();
         }
-        app('router')->aliasMiddleware('RolesAuth', \App\Http\Middleware\RolesAuth::class);
     }
 
     /**
@@ -59,7 +58,7 @@ class GeneradorServiceProvider extends ServiceProvider {
         // Publishing the configuration file.
         $this->publishes([
 //            __DIR__ . '/../config/generador.php' => config_path('generador.php'),
-            __DIR__ . '/../archivos/app/Http/Controllers' => app_path('Http/Controllers'),
+            __DIR__ . '/../archivos/app/Http' => app_path('Http'),
 //            __DIR__ . '/../archivos/app/Http/Middleware' => app_path('Http/Middleware'),
             __DIR__ . '/../archivos/config/jsvalidation.php' => config_path('jsvalidation.php'),
             __DIR__ . '/../archivos/public' => public_path(),

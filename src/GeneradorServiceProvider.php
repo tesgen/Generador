@@ -20,6 +20,13 @@ class GeneradorServiceProvider extends ServiceProvider {
         if ($this->app->runningInConsole()) {
             $this->bootForConsole();
         }
+
+        app('router')->aliasMiddleware('roleAuth', \App\Http\Middleware\RolesAuth::class);
+        app('router')->aliasMiddleware('roleAuthApi', \App\Http\Middleware\RolesAuthApi::class);
+        app('router')->aliasMiddleware('webAuth', \App\Http\Middleware\WebAuth::class);
+
+//        $router = $this->app['router'];
+//        $router->pushMiddlewareToGroup('web', MyPackage\Middleware\WebOne::class);
     }
 
     /**

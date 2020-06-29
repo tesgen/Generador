@@ -33,8 +33,8 @@ class CreadorContenidoEdit {
         $funcionesFormula = CreadorContenidoFuncionesFormula::getFunciones($tabla, $tabla->isFormActualizarIgualQueGuardar());
         $contenido = str_replace('$FUNCIONES_PARA_FORMULA$', $funcionesFormula, $contenido);
 
-//        $confDateTimePicker = CreadorContenidoConfDateTimePicker::getContenido($tabla);
-        $confDateTimePicker = "\n";
+        $confDateTimePicker = CreadorContenidoConfDateTimePicker::getContenido($tabla);
+//        $confDateTimePicker = "\n";
         $contenido = str_replace('$CONF_DATE_TIME_PICKER$', $confDateTimePicker, $contenido);
 
         $contenidoOnReady = CreadorContenidoFuncionesFormula::getContenidoOnReady($tabla, true);

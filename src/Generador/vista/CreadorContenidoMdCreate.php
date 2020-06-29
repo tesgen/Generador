@@ -44,7 +44,8 @@ class CreadorContenidoMdCreate {
         $contenido = str_replace('$CONTENIDO_LIMPIAR_CAMPOS_DETALLE$', $contenidoLimpiarCamposDetalle, $contenido);
         $contenido = str_replace('$ASIGNACION_VARIABLES_JS_MAESTRO$', $asignacionVariablesJsMaestro, $contenido);
 
-        $confDateTimePicker = "\n";
+//        $confDateTimePicker = "\n";
+        $confDateTimePicker = CreadorContenidoConfDateTimePicker::getContenido($tabla);
         $contenido = str_replace('$CONF_DATE_TIME_PICKER$', $confDateTimePicker, $contenido);
 
         $funcionesFormula = CreadorContenidoFuncionesFormula::getFunciones($tabla, true);

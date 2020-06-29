@@ -85,6 +85,7 @@ Route::group(array('middleware' => 'webAuth'), function () {
         }
 
         $contenido .= $indentacion . "Route::get('/', 'HomeController@index')->name('home');\n";
+        $contenido .= $indentacion . "Route::get('/home', 'HomeController@index')->name('home');\n";
 
         if ($autenticacionGenerada) {
             $contenido .= $indentacion . "Route::post('logout', 'Auth\LoginController@logout')->name('logout');\n";

@@ -22,9 +22,9 @@ class CreadorContenidoAjax {
             if ($esParaCrear) {
                 if ($columna->isCampoGuardable()) {
                     $contenido .= "                    $nombreColumna: $(\"#$nombreColumna\").val()";
-//                    if ($columna->getTipo() === 'date') {
-//                        $contenido .= ".split(\"/\").reverse().join(\"-\")";
-//                    }
+                    if ($columna->getTipo() === 'date') {
+                        $contenido .= ".split(\"/\").reverse().join(\"-\")";
+                    }
                     $contenido .= ",\n";
                 } else {
                     $contenido .= "                    $nombreColumna: null,\n";
@@ -32,9 +32,9 @@ class CreadorContenidoAjax {
             } else {
                 if ($columna->isVisibleEnFormularioActualizar() && $columna->isCampoActualizable()) {
                     $contenido .= "                    $nombreColumna: $(\"#$nombreColumna\").val()";
-//                    if ($columna->getTipo() === 'date') {
-//                        $contenido .= ".split(\"/\").reverse().join(\"-\")";
-//                    }
+                    if ($columna->getTipo() === 'date') {
+                        $contenido .= ".split(\"/\").reverse().join(\"-\")";
+                    }
                     $contenido .= ",\n";
                 }
             }

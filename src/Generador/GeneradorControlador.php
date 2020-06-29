@@ -245,7 +245,7 @@ class GeneradorControlador {
 //            $contenidoStore = "        $$nombreTabla = new $nombreClase();\n";
 //            $contenidoStore .= '        $' . $nombreTabla . '->fill($request->all());' . "\n";
 //            $contenidoStore .= "        $$nombreTabla" . "->save();" . "\n";
-            $contenidoStore .= '        ' . $nombreClase . '::create($request->all());' . "\n";
+            $contenidoStore .= '        $'+ $nombreTabla + ' = '  . $nombreClase . '::create($request->all());' . "\n";
 
 //            $contenidoStore .= "        $nombreClase::insert(\$request->all());" . "\n";
 //            $contenidoStore .= "        return response()->json(true);";

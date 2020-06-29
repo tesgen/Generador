@@ -2,9 +2,6 @@
 
 namespace TesGen\Generador;
 
-use App\Http\Middleware\RolesAuth;
-use App\Http\Middleware\RolesAuthApi;
-use App\Http\Middleware\WebAuth;
 use Illuminate\Support\ServiceProvider;
 
 class GeneradorServiceProvider extends ServiceProvider {

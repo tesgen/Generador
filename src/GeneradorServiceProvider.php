@@ -2,6 +2,9 @@
 
 namespace TesGen\Generador;
 
+use App\Http\Middleware\RolesAuth;
+use App\Http\Middleware\RolesAuthApi;
+use App\Http\Middleware\WebAuth;
 use Illuminate\Support\ServiceProvider;
 
 class GeneradorServiceProvider extends ServiceProvider {
@@ -21,17 +24,10 @@ class GeneradorServiceProvider extends ServiceProvider {
             $this->bootForConsole();
         }
 
-//        app('router')->aliasMiddleware('roleAuth', \App\Http\Middleware\RolesAuth::class);
-//        app('router')->aliasMiddleware('roleAuthApi', \App\Http\Middleware\RolesAuthApi::class);
-//        app('router')->aliasMiddleware('webAuth', \App\Http\Middleware\WebAuth::class);
-
         $router = $this->app['router'];
         $router->pushMiddlewareToGroup('roleAuth', \App\Http\Middleware\RolesAuth::class);
         $router->pushMiddlewareToGroup('roleAuthApi', \App\Http\Middleware\RolesAuthApi::class);
         $router->pushMiddlewareToGroup('webAuth', \App\Http\Middleware\WebAuth::class);
-
-//        $router = $this->app['router'];
-//        $router->pushMiddlewareToGroup('web', MyPackage\Middleware\WebOne::class);
     }
 
     /**

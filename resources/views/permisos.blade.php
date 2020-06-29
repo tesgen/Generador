@@ -75,8 +75,8 @@
             }
 
             if (autenticacion_json_string.generado) {
-                contenidoTabla += `<tr><td>users</td><td>Usuario</td><td>App\\Http\\Controllers\\UsuarioController</td></tr>`;
-                contenidoTabla += `<tr><td>roles</td><td>Rol</td><td>App\\Http\\Controllers\\RoleController</td></tr>`;
+                contenidoTabla += `<tr><td>users</td><td>Usuario</td><td>App\\Http\\Controllers\\Auth\\UserController</td></tr>`;
+                contenidoTabla += `<tr><td>roles</td><td>Rol</td><td>App\\Http\\Controllers\\Auth\\RoleController</td></tr>`;
             }
 
             $(`#tablaPermisos > tbody:last-child`).empty().html(contenidoTabla);

@@ -173,7 +173,7 @@ class CreadorContenidoCamposEditar {
                             if (!$esIgualQueGuardar) {
                                 if (($columna->isCampoActualizable() && ($columna->isAutomaticoActualizar() || $columna->isFormulaActualizar()))
                                     || (!$columna->isCampoActualizable())) {
-                                    $campo = 'readonly';
+                                    $readOnly = 'readonly';
                                 }
                             } else {
                                 if ($columna->isAutomaticoGuardar() || $columna->isFormulaGuardar()) {

@@ -19,15 +19,15 @@ class CreadorContenidoFuncionesFormula {
 
         foreach ($tabla->getColumnas() as $columna) {
 
-            if ($esParaGuardar) {
+            if ($esParaGuardar || (!$esParaGuardar && $tabla->isFormActualizarIgualQueGuardar())) {
 
                 if ($columna->isFormulaGuardar()) {
-                    $contenido .= self::getFuncion($columna, true);
+                    $contenido .= self::getFuncion($tabla, $columna, true);
                 }
 
             } else {
                 if ($columna->isFormulaActualizar()) {
-                    $contenido .= self::getFuncion($columna, false);
+                    $contenido .= self::getFuncion($tabla, $columna, false);
                 }
             }
 
@@ -36,13 +36,13 @@ class CreadorContenidoFuncionesFormula {
         return $contenido;
     }
 
-    private static function getFuncion(Columna $columna, bool $esParaGuardar) {
+    private static function getFuncion(Tabla $tabla, Columna $columna, bool $esParaGuardar) {
 
         $nombreColumna = $columna->getNombreColumna();
 
         $funcion = "        function calcular_" . $nombreColumna . "() {\n\n";
 
-        if ($esParaGuardar) {
+        if ($esParaGuardar  || (!$esParaGuardar && $tabla->isFormActualizarIgualQueGuardar())) {
             $formula = $columna->getValorFormulaGuardar();
         } else {
             $formula = $columna->getValorFormulaActualizar();
@@ -117,15 +117,15 @@ class CreadorContenidoFuncionesFormula {
 
         foreach ($tabla->getColumnas() as $columna) {
 
-            if ($esParaGuardar) {
+            if ($esParaGuardar || (!$esParaGuardar && $tabla->isFormActualizarIgualQueGuardar())) {
 
                 if ($columna->isFormulaGuardar()) {
-                    $contenido .= self::getOnkeyUp($columna, true);
+                    $contenido .= self::getOnkeyUp($tabla, $columna, true);
                 }
 
             } else {
                 if ($columna->isFormulaActualizar()) {
-                    $contenido .= self::getOnkeyUp($columna, false);
+                    $contenido .= self::getOnkeyUp($tabla, $columna, false);
                 }
             }
 
@@ -135,11 +135,11 @@ class CreadorContenidoFuncionesFormula {
         return $contenido;
     }
 
-    private static function getOnkeyUp(Columna $columna, bool $esParaGuardar) {
+    private static function getOnkeyUp(Tabla $tabla, Columna $columna, bool $esParaGuardar) {
 
         $nombreColumna = $columna->getNombreColumna();
 
-        if ($esParaGuardar) {
+        if ($esParaGuardar || (!$esParaGuardar && $tabla->isFormActualizarIgualQueGuardar())) {
             $formula = $columna->getValorFormulaGuardar();
         } else {
             $formula = $columna->getValorFormulaActualizar();

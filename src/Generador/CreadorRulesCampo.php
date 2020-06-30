@@ -33,7 +33,7 @@ class CreadorRulesCampo {
 
         foreach ($tabla->getColumnas() as $columna) {
 
-            if ($esParaGuardar) {
+            if ($esParaGuardar || (!$esParaGuardar && $tabla->isFormActualizarIgualQueGuardar())) {
                 if (($columna->getNombreColumna() === $tabla->getClavePrimaria() && $columna->isAutoIncrement())
                     || !$columna->isCampoGuardable()) {
                     continue;
@@ -49,7 +49,7 @@ class CreadorRulesCampo {
 
             $contenidoReturn .= "            '" . $columna->getNombreColumna() . "' => \"$validaciones\",\n";
 
-            $messages = $this->getMensajesCampo($columna, $esParaGuardar);
+            $messages = $this->getMensajesCampo($tabla, $columna, $esParaGuardar);
 
             if (strlen($messages) > 0) {
                 $contenidoMessages .= $messages . ",\n";
@@ -62,7 +62,7 @@ class CreadorRulesCampo {
     }
 
     private function getReglasCampo(Tabla $tabla, Columna $columna, bool $esParaGuardar) {
-        if ($esParaGuardar) {
+        if ($esParaGuardar || (!$esParaGuardar && $tabla->isFormActualizarIgualQueGuardar())) {
             $validacion = $columna->getValidacionGuardar();
         } else {
             $validacion = $columna->getValidacionActualizar();
@@ -100,9 +100,9 @@ class CreadorRulesCampo {
         return $validacion;
     }
 
-    private function getMensajesCampo(Columna $columna, bool $esParaGuardar) {
+    private function getMensajesCampo(Tabla $tabla, Columna $columna, bool $esParaGuardar) {
 
-        if ($esParaGuardar) {
+        if ($esParaGuardar || (!$esParaGuardar && $tabla->isFormActualizarIgualQueGuardar())) {
             $validacion = $columna->getValidacionGuardar();
         } else {
             $validacion = $columna->getValidacionActualizar();

@@ -7,7 +7,7 @@ use TesGen\Generador\Utils\Mapeador;
 
 class CreadorContenidoAjax {
 
-    public static function getDatosParaAjax(Tabla $tabla, bool $esParaCrear): string {
+    public static function getDatosParaAjax(Tabla $tabla, bool $esParaGuardar): string {
 
         $contenido = '';
 
@@ -19,7 +19,7 @@ class CreadorContenidoAjax {
                 continue;
             }
 
-            if ($esParaCrear) {
+            if ($esParaGuardar || (!$esParaGuardar && $tabla->isFormActualizarIgualQueGuardar())) {
                 if ($columna->isCampoGuardable()) {
                     $contenido .= "                    $nombreColumna: $(\"#$nombreColumna\").val()";
                     if ($columna->getTipo() === 'date') {

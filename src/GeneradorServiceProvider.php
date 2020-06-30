@@ -67,7 +67,7 @@ class GeneradorServiceProvider extends ServiceProvider {
 //            __DIR__ . '/../archivos/app/Http/Middleware' => app_path('Http/Middleware'),
             __DIR__ . '/../archivos/config/jsvalidation.php' => config_path('jsvalidation.php'),
             __DIR__ . '/../archivos/public' => public_path(),
-            __DIR__ . '/../archivos/resources/views' => resource_path('views'),
+            __DIR__ . '/../archivos/resources' => resource_path(),
         ], 'generador.archivos');
 
         // Publishing the views.

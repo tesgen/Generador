@@ -31,13 +31,17 @@
                         <a class="nav-item nav-link active" id="nav-formulario-guardar-{{$tipoTabla}}-tab"
                            data-toggle="tab"
                            href="#nav-formulario-guardar-{{$tipoTabla}}" role="tab"
-                           aria-controls="nav-formulario-guardar-{{$tipoTabla}}" aria-selected="true">Formulario Guardar</a>
+                           aria-controls="nav-formulario-guardar-{{$tipoTabla}}" aria-selected="true">Formulario
+                            Guardar</a>
 
-                        <a class="nav-item nav-link" id="nav-formulario-actualizar-{{$tipoTabla}}-tab" data-toggle="tab"
-                           href="#nav-formulario-actualizar-{{$tipoTabla}}" role="tab"
-                           aria-controls="nav-formulario-actualizar-{{$tipoTabla}}" aria-selected="true">Formulario
-                            Actualizar</a>
+{{--                        @if($tipoTabla == 'principal')--}}
 
+                            <a @if($tipoTabla == 'detalle') hidden @endif class="nav-item nav-link" id="nav-formulario-actualizar-{{$tipoTabla}}-tab"
+                               data-toggle="tab"
+                               href="#nav-formulario-actualizar-{{$tipoTabla}}" role="tab"
+                               aria-controls="nav-formulario-actualizar-{{$tipoTabla}}" aria-selected="true">Formulario
+                                Actualizar</a>
+{{--                        @endif--}}
                     </div>
                 </nav>
                 <div class="tab-content">
@@ -85,41 +89,44 @@
 
 
                     </div>
+{{--                    @if($tipoTabla == 'principal')--}}
+                        <div @if($tipoTabla == 'detalle') hidden @endif class="tab-pane nav-formulario-actualizar-{{$tipoTabla}}"
+                             id="nav-formulario-actualizar-{{$tipoTabla}}" role="tabpanel"
+                             aria-labelledby="nav-formulario-actualizar-{{$tipoTabla}}-tab">
 
-                    <div class="tab-pane nav-formulario-actualizar-{{$tipoTabla}}"
-                         id="nav-formulario-actualizar-{{$tipoTabla}}" role="tabpanel"
-                         aria-labelledby="nav-formulario-actualizar-{{$tipoTabla}}-tab">
-
-                        <div class="form-row">
-                            <div class="form-group col-sm-12">
-                                <input id="checkIgualQueFormGuardar" type="checkbox" class="checkIgualQueFormGuardar"
-                                       onclick="habilitarDeshabilitarFormActualizar('{{$tipoTabla}}')">
-                                <label for="checkIgualQueFormGuardar">Igual que Formulario Guardar</label>
-                            </div>
-                        </div>
-
-                        <div class="formActualizar">
-
-                            <div class="grid-stack actualizar-{{$tipoTabla}}"></div>
-                            <br>
-                            {{--                        <input type="text" id="id-campo-auxiliar-actualizar-{{$tipoTabla}}"><button onclick="agregarItemAuxiliar('{{$tipoTabla}}', false)">Agregar</button>--}}
-                            {{--                        <br>--}}
                             <div class="form-row">
                                 <div class="form-group col-sm-12">
-                                    <label>Campos no visibles:</label>
-                                    <select id="campos-no-visibles-actualizar-{{$tipoTabla}}"
-                                            class="form-control selectpicker">
-
-                                    </select>
+                                    <input id="checkIgualQueFormGuardar" type="checkbox"
+                                           class="checkIgualQueFormGuardar"
+                                           onclick="habilitarDeshabilitarFormActualizar('{{$tipoTabla}}')">
+                                    <label for="checkIgualQueFormGuardar">Igual que Formulario Guardar</label>
                                 </div>
-                                <button class="btn btn-info" onclick="agregarNoVisibleAForm('{{$tipoTabla}}', false)">
-                                    Agregar
-                                </button>
                             </div>
-                            @include('tesgen::includes.conf_columna_actualizar', ["tipoTabla' => '{{$tipoTabla}}"])
-                        </div>
-                    </div>
 
+                            <div class="formActualizar">
+
+                                <div class="grid-stack actualizar-{{$tipoTabla}}"></div>
+                                <br>
+                                <input type="text" id="id-campo-auxiliar-actualizar-{{$tipoTabla}}">
+                                <button onclick="agregarItemAuxiliar('{{$tipoTabla}}', false)">Agregar</button>
+                                <br>
+                                <div class="form-row">
+                                    <div class="form-group col-sm-12">
+                                        <label>Campos no visibles:</label>
+                                        <select id="campos-no-visibles-actualizar-{{$tipoTabla}}"
+                                                class="form-control selectpicker">
+
+                                        </select>
+                                    </div>
+                                    <button class="btn btn-info"
+                                            onclick="agregarNoVisibleAForm('{{$tipoTabla}}', false)">
+                                        Agregar
+                                    </button>
+                                </div>
+                                @include('tesgen::includes.conf_columna_actualizar', ["tipoTabla' => '{{$tipoTabla}}"])
+                            </div>
+                        </div>
+{{--                    @endif--}}
                 </div>
                 <br>
             </div>

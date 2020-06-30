@@ -2,12 +2,11 @@
 
 namespace TesGen\Generador\Controllers;
 
-//use App\Role;
-//use App\Usuario;
 use DB;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use TesGen\Generador\Generador\GeneradorAutenticacion;
 use TesGen\Generador\Generador\GeneradorControlador;
@@ -55,13 +54,19 @@ class BaseController extends Controller {
      * @return Factory|View
      */
     public function index() {
-//        $lista_roles = Role::all();
+
+        $lista_roles = [];
+
+        if (class_exists('App\Role')) {
+            $lista_roles = \App\Role::all();
+        }
+
         $jsonMap = $this->obtenerJsonMapTablas();
         $jsonMapAutenticacion = $this->obtenerJsonMapAutenticacion();
         return view('tesgen::home')
             ->with('autenticacion_json_string', json_encode($jsonMapAutenticacion))
             ->with('tablas_json_string', json_encode($jsonMap))
-//            ->with('lista_roles', json_encode($lista_roles))
+            ->with('lista_roles', json_encode($lista_roles))
             ->with('nombre_bd', json_encode(DB::getDatabaseName()));
     }
 

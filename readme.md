@@ -14,6 +14,11 @@ Via Composer
 ``` bash
 $ composer require tesgen/generador
 ```
+Publish
+
+``` bash
+$ php artisan vendor:publish --provider="TesGen\Generador\GeneradorServiceProvider"
+```
 
 ## Usage
 

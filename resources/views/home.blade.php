@@ -68,10 +68,11 @@
 
     <script>
         $(function () {
+
             var tablas = JSON.parse('{!! $tablas_json_string !!}');
             var autenticacion = JSON.parse('{!! $autenticacion_json_string !!}');
 
-            {{--var roles = JSON.parse('{!! $lista_roles !!}');--}}
+            var roles = JSON.parse('{!! $lista_roles !!}');
             var nombreBd = JSON.parse('{!! $nombre_bd !!}');
             // console.log(roles);
 
@@ -107,20 +108,20 @@
 
             $(`#tablaTablas > tbody:last-child`).empty().html(contenidoTablaTablas);
 
-            // var contenidoTablaRoles = '';
-            //
-            // for (var j = 0; j < roles.length; j++) {
-            //     var rol = roles[j];
-            //     var idRol = rol.id;
-            //     var nombreRol = rol.name;
-            //
-            //     contenidoTablaRoles += `<tr>
-            //                         <td>${idRol}</td>
-            //                         <td>${nombreRol}</td>
-            //                     </tr>`;
-            // }
-            //
-            // $(`#tablaRoles > tbody:last-child`).empty().html(contenidoTablaRoles);
+            var contenidoTablaRoles = '';
+
+            for (var j = 0; j < roles.length; j++) {
+                var rol = roles[j];
+                var idRol = rol.id;
+                var nombreRol = rol.name;
+
+                contenidoTablaRoles += `<tr>
+                                    <td>${idRol}</td>
+                                    <td>${nombreRol}</td>
+                                </tr>`;
+            }
+
+            $(`#tablaRoles > tbody:last-child`).empty().html(contenidoTablaRoles);
         });
 
         function eliminar() {
@@ -137,6 +138,8 @@
                 dangerMode: true
             }).then(function (result) {
                 if (result) {
+
+
                     $.ajax({
                         url: '{{url('/generador/elimimar_archivos_generados')}}',
                         type: 'POST',

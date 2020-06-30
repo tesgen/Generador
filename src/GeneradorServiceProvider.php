@@ -70,6 +70,8 @@ class GeneradorServiceProvider extends ServiceProvider {
             __DIR__ . '/../archivos/resources' => resource_path(),
         ], 'generador.archivos');
 
+        //asdfasdfasdasdfasdf
+
         // Publishing the views.
         /*$this->publishes([
             __DIR__.'/../resources/views' => base_path('resources/views/vendor/tesgen'),

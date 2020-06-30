@@ -491,9 +491,9 @@
                 //Validaciones Guardar
                 confColumna.find(".checkRequeridoGuardar").prop('checked', validacionesGuardar.requerido);
                 confColumna.find(".checkLongitudMinimaGuardar").prop('checked', validacionesGuardar.longitudMinima);
-                confColumna.find(".valorLongitudMinimaGuardar").val(validacionesGuardar.valorLongitudMinima);
+                confColumna.find(".valorLongitudMinimaGuardar").val(isNaN(validacionesGuardar.valorLongitudMinima) ? '' : validacionesGuardar.valorLongitudMinima);
                 confColumna.find(".checkLongitudMaximaGuardar").prop('checked', validacionesGuardar.longitudMaxima);
-                confColumna.find(".valorLongitudMaximaGuardar").val(validacionesGuardar.valorLongitudMaxima);
+                confColumna.find(".valorLongitudMaximaGuardar").val(isNaN(validacionesGuardar.valorLongitudMaxima) ? '' : validacionesGuardar.valorLongitudMaxima);
                 confColumna.find(".checkUnicoGuardar").prop('checked', validacionesGuardar.unico);
 
                 //Actualizar
@@ -509,9 +509,9 @@
                 //Validaciones Actualizar
                 confColumna.find(".checkRequeridoActualizar").prop('checked', validacionesActualizar.requerido);
                 confColumna.find(".checkLongitudMinimaActualizar").prop('checked', validacionesActualizar.longitudMinima);
-                confColumna.find(".valorLongitudMinimaActualizar").val(validacionesActualizar.valorLongitudMinima);
+                confColumna.find(".valorLongitudMinimaActualizar").val(isNaN(validacionesActualizar.valorLongitudMinima) ? '' : validacionesActualizar.valorLongitudMinima);
                 confColumna.find(".checkLongitudMaximaActualizar").prop('checked', validacionesActualizar.longitudMaxima);
-                confColumna.find(".valorLongitudMaximaActualizar").val(validacionesActualizar.valorLongitudMaxima);
+                confColumna.find(".valorLongitudMaximaActualizar").val(isNaN(validacionesActualizar.valorLongitudMaxima) ? '' : validacionesActualizar.valorLongitudMaxima);
                 confColumna.find(".checkUnicoActualizar").prop('checked', validacionesActualizar.unico);
 
                 break;

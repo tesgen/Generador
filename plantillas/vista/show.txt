@@ -8,6 +8,7 @@
         <li class="breadcrumb-item active">Datos</li>
     </ol>
     <div class="container-fluid">
+
         <div class="animated fadeIn">
             <div class="row">
                 <div class="col-lg-12">

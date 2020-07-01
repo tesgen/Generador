@@ -109,7 +109,7 @@
                                 <br>
 {{--                                <input type="text" id="id-campo-auxiliar-actualizar-{{$tipoTabla}}">--}}
 {{--                                <button onclick="agregarItemAuxiliar('{{$tipoTabla}}', false)">Agregar</button>--}}
-{{--                                jl;ksadjf;lkasdflaksjdf--}}
+{{--                                jl;ksadjf;lkasdfasdfasdflaksasdjdf--}}
                                 <br>
                                 <div class="form-row">
                                     <div class="form-group col-sm-12">

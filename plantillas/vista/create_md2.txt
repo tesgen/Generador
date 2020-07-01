@@ -18,12 +18,12 @@
                             <i class="fa fa-plus-square-o fa-lg"></i>
                             <strong>Crear $NOMBRE_NATURAL$</strong>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body bg-light">
                             <div class="card">
                                 <div class="card-header">
                                     Datos de $NOMBRE_NATURAL$
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body bg-light">
                                     <div class="alert alert-danger alert-dismissible fade show print-error-msg"
                                          style="display:none">
                                         <ul></ul>
@@ -40,7 +40,7 @@ $CAMPOS_MAESTRO$                                    </form>
                                 <div class="card-header">
                                     Datos de Detalle
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body bg-light">
                                     <form action="#" id="formDetalle" onsubmit="return false">
 $CAMPOS_AUXILIAR$
                                         <div class="form-group col-sm-12">
@@ -55,7 +55,7 @@ $CAMPOS_AUXILIAR$
                                 <div class="card-header">
                                     Lista de Detalles
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body bg-light">
                                     <div class="form-group col-sm-12">
                                         <table id="tabla" class="table table-responsive-sm table-striped table-sm">
                                             <thead>

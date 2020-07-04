@@ -73,7 +73,7 @@
 </header>
 
 <div class="app-body">
-    <div class="sidebar" style="background-image: linear-gradient(#0e1c4b, #3576e5);">
+    <div class="sidebar">
 
         <nav class="sidebar-nav">
             <ul class="nav">

@@ -39,7 +39,7 @@
                 <div id="nombreBd"></div>
                 <h5 class="text-center">Tablas</h5>
                 <table class="table table-sm table-bordered table-striped" id="tablaTablas">
-                    <thead>
+                    <thead class="">
                     <tr>
                         <th>Nombre</th>
                         <th>Nombre Natural</th>
@@ -64,9 +64,25 @@
 
                 <div id="autenticacionGenerada"></div>
 
+                <h5 class="text-center">Usuarios</h5>
+                <table class="table table-sm table-bordered table-striped" id="tablaUsuarios">
+                    <thead class="">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre Usuario</th>
+                        <th>Rol</th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="tablaUsuariosBody">
+                    </tbody>
+                </table>
+
+                <hr>
+
                 <h5 class="text-center">Roles</h5>
                 <table class="table table-sm table-bordered table-striped" id="tablaRoles">
-                    <thead>
+                    <thead class="">
                     <tr>
                         <th>ID</th>
                         <th>Nombre Rol</th>
@@ -95,6 +111,8 @@
             var tablas = JSON.parse('{!! $tablas_json_string !!}');
             var autenticacion = JSON.parse('{!! $autenticacion_json_string !!}');
 
+            var usuarios = JSON.parse('{!! $lista_usuarios !!}');
+            console.log(usuarios);
             var roles = JSON.parse('{!! $lista_roles !!}');
             var nombreBd = JSON.parse('{!! $nombre_bd !!}');
             // console.log(roles);
@@ -103,8 +121,14 @@
 
             var contenidoTablaTablas = '';
 
-            $('#nombreBd').html(`<strong>Base de Datos actual</strong>: ${nombreBd}`);
-            $('#autenticacionGenerada').html(`<strong>Autenticación Generada</strong>: ${autenticacion.generado}`);
+            $('#nombreBd').html(`<strong style="font-size: 18px;">Base de Datos actual</strong>: <span style="font-size: 16px;" class="badge badge-pill badge-info">${nombreBd}</span><br><hr>`);
+            var autenticacionTexto = '';
+            if (autenticacion.generado) {
+                autenticacionTexto = '<span style="font-size: 16px;" class="badge badge-pill badge-success">true</span>';
+            } else {
+                autenticacionTexto = '<span style="font-size: 16px;" class="badge badge-pill badge-danger">false</span>';
+            }
+            $('#autenticacionGenerada').html(`<strong style="font-size: 18px;">Autenticación Generada</strong>: ${autenticacionTexto}<br><hr>`);
 
             for (var i = 0; i < tablas.length; i++) {
                 var tabla = tablas[i];
@@ -131,10 +155,27 @@
 
             $(`#tablaTablas > tbody:last-child`).empty().html(contenidoTablaTablas);
 
+            var contenidoTablaUsuarios = '';
+
+            for (var j = 0; j < usuarios.length; j++) {
+                var usuario = usuarios[j];
+                var id = usuario.id;
+                var username = usuario.username;
+                var nombreRol = usuario.name;
+
+                contenidoTablaUsuarios += `<tr>
+                                    <td>${id}</td>
+                                    <td>${username}</td>
+                                    <td>${nombreRol}</td>
+                                </tr>`;
+            }
+
+            $(`#tablaUsuarios > tbody:last-child`).empty().html(contenidoTablaUsuarios);
+
             var contenidoTablaRoles = '';
 
-            for (var j = 0; j < roles.length; j++) {
-                var rol = roles[j];
+            for (var k = 0; k < roles.length; k++) {
+                var rol = roles[k];
                 var idRol = rol.id;
                 var nombreRol = rol.name;
 

@@ -33,7 +33,6 @@
             height: 70px;
             padding: 10px;
             margin-bottom: 10px;
-            /*background-image: linear-gradient(to right, #3576e5, #0e1c4b);*/
             background-image: linear-gradient(to right, #06478e, #3e8adc, #06478e);
         }
 
@@ -47,6 +46,9 @@
             color: white;
             padding: 10px;
             margin-top: 10px;
+            margin-bottom: 0;
+            border-radius: 5px 5px 0 0;
+            font-weight: bold;
         }
 
     </style>
@@ -100,7 +102,7 @@
             </ul>
         </nav>
     </div>
-    <main class="main bg-light">
+    <main class="main">
         @yield('titulo-pagina')
         @yield('content')
         <div class="modal" tabindex="-1" role="dialog" id="spinnerModal"

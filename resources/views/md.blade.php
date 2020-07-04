@@ -1,8 +1,13 @@
-@extends('tesgen::layouts.vista_base')
+@extends('tesgen::layouts.vista_base_crud')
 
 @section('titulo')
     Generador Maestro-Detalle
 @endsection
+
+@section('texto-titulo')
+    <i class="nav-icon fa fa-window-restore" aria-hidden="true"></i><span> Generador Maestro-Detalle</span>
+@endsection
+
 @section('contenido_propio')
     <div class="card" id="card-detalle">
         <div class="card-header">

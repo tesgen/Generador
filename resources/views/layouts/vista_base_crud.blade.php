@@ -6,10 +6,14 @@
     <link rel="stylesheet" href="{{asset('css/gridstack-extra.css')}}">
 @endsection
 
+@section('titulo-pagina')
+    <div id="titulo-pagina"><h1 class="text-center">@yield('texto-titulo')</h1></div>
+@endsection
+
 @section('content')
 
     <div class="container-fluid">
-        <h1 class="text-center">@yield('titulo')</h1>
+{{--        <h1 class="text-center">@yield('titulo')</h1>--}}
 
         <div class="card" id="card-principal">
             <div class="card-header">

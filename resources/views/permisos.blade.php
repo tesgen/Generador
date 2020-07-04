@@ -5,10 +5,18 @@
     Generador de Permisos
 @endsection
 
+@section('titulo-pagina')
+    <div id="titulo-pagina"><h1 class="text-center">
+            <i class="nav-icon fa fa-address-card" aria-hidden="true"></i>
+            <span> Generador de Permisos</span></h1>
+    </div>
+@endsection
+
+
 @section('content')
 
     <div class="container-fluid">
-        <h1 class="text-center">Generador de Permisos</h1>
+{{--        <h1 class="text-center">Generador de Permisos</h1>--}}
 
         <div class="card" id="card-principal">
             <div class="card-header">

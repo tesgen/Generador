@@ -12,6 +12,44 @@
     <link rel="stylesheet" href="{{asset('css/simple-line-icons-2.4.1.css')}}">
     <link rel="stylesheet" href="{{asset('css/gijgo.min.css')}}">
     @yield('styles')
+    <style>
+
+        .app-header {
+            background-color: #022b5e;
+            border-bottom: 0px;
+        }
+
+        .sidebar .nav-link.active {
+            background: #0a5ab1;
+        }
+
+        .sidebar .nav-link.active:hover {
+            background: #5ca7f8;
+        }
+
+        #titulo-pagina {
+            /*background: #3576e5;*/
+            color: white;
+            height: 70px;
+            padding: 10px;
+            margin-bottom: 10px;
+            /*background-image: linear-gradient(to right, #3576e5, #0e1c4b);*/
+            background-image: linear-gradient(to right, #06478e, #3e8adc, #06478e);
+        }
+
+        .card-header {
+            background-color: #5ca7f8;
+            color: white;
+        }
+
+        h5 {
+            background-color: #5ca7f8;
+            color: white;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+    </style>
 </head>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
 <header class="app-header navbar">
@@ -35,46 +73,35 @@
 </header>
 
 <div class="app-body">
-    <div class="sidebar">
+    <div class="sidebar" style="background-image: linear-gradient(#0e1c4b, #3576e5);">
+
         <nav class="sidebar-nav">
             <ul class="nav">
-{{--                <li class="nav-item">--}}
-{{--                    <a class="nav-link" href="{{url('/generador/crud')}}">--}}
-{{--                        <i class="nav-icon icon-cursor"></i><span>CRUD</span>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
                 <li class="nav-item">
                     <a class="nav-link" href="{{url('/generador/crud2')}}">
-                        <i class="nav-icon icon-cursor"></i><span>CRUD</span>
+                        <i class="nav-icon fa fa-list-alt" aria-hidden="true"></i><span>CRUD</span>
                     </a>
                 </li>
-{{--                <li class="nav-item">--}}
-{{--                    <a class="nav-link" href="{{url('/generador/md')}}">--}}
-{{--                        <i class="nav-icon icon-cursor"></i><span>Maestro-Detalle</span>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
                 <li class="nav-item">
                     <a class="nav-link" href="{{url('/generador/md2')}}">
-                        <i class="nav-icon icon-cursor"></i><span>Maestro-Detalle</span>
+                        <i class="nav-icon fa fa-window-restore" aria-hidden="true"></i><span>Maestro-Detalle</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link"
-                       href="{{url('/generador/usuarios')}}">
-                        <i class="nav-icon icon-cursor"></i><span>Autenticación-Usuario</span>
+                    <a class="nav-link" href="{{url('/generador/usuarios')}}">
+                        <i class="nav-icon fa fa-user" aria-hidden="true"></i><span>Autenticación-Usuario</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link"
-                       href="{{url('/generador/permisos')}}">
-                        <i class="nav-icon icon-cursor"></i><span>Permisos</span>
+                    <a class="nav-link" href="{{url('/generador/permisos')}}">
+                        <i class="nav-icon fa fa-address-card" aria-hidden="true"></i><span>Permisos</span>
                     </a>
                 </li>
             </ul>
         </nav>
-        <button class="sidebar-minimizer brand-minimizer" type="button"></button>
     </div>
-    <main class="main">
+    <main class="main bg-light">
+        @yield('titulo-pagina')
         @yield('content')
         <div class="modal" tabindex="-1" role="dialog" id="spinnerModal"
              style="background-color: rgba(0, 0, 0, .5) !important;">

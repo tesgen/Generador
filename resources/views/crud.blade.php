@@ -1,7 +1,11 @@
-@extends('tesgen::layouts.vista_base')
+@extends('tesgen::layouts.vista_base_crud')
 
 @section('titulo')
     Generador CRUD
+@endsection
+
+@section('texto-titulo')
+        <i class="nav-icon fa fa-list-alt" aria-hidden="true"></i><span> Generador CRUD</span>
 @endsection
 @section('contenido_propio')
 

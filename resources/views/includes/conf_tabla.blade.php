@@ -25,7 +25,7 @@
             <input type="text" class="form-control nombrePlural">
         </div>
     </div>
-    <div class="form-row">
+    <div @if($tipoTabla == 'detalle') hidden @endif class="form-row">
         <div class="form-group col-sm-4">
             <input id="checkGenerarApi" type="checkbox" class="checkGenerarApi">
             <label for="checkGenerarApi">Generar API</label>

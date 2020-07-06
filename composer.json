@@ -15,7 +15,8 @@
         "illuminate/support": "~5",
         "ext-json": "*",
         "doctrine/dbal": "^2.9",
-        "proengsoft/laravel-jsvalidation": "^2.4.0"
+        "proengsoft/laravel-jsvalidation": "^2.4.0",
+        "laravel/passport": "7.5.1"
     },
     "require-dev": {
         "phpunit/phpunit": "~7.0",

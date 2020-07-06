@@ -45,7 +45,14 @@ class RolesAuth {
         $permissions = $role->permissions;
 
         foreach ($permissions as $permission) {
+
+            $actionNameArray = explode('\\', $actionName);
+            $actionName = end($actionNameArray);
+
             $controller = $permission->controller;
+            $controllerArray = explode('\\', $controller);
+            $controller = end($controllerArray);
+
             if ($actionName == $controller) {
                 return true;
             }

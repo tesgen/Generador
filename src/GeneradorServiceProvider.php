@@ -3,6 +3,10 @@
 namespace TesGen\Generador;
 
 use Illuminate\Support\ServiceProvider;
+use Laravel\Passport\Console\ClientCommand;
+use Laravel\Passport\Console\InstallCommand;
+use Laravel\Passport\Console\KeysCommand;
+use TesGen\Generador\Utils\ArchivoUtil;
 
 class GeneradorServiceProvider extends ServiceProvider {
     /**
@@ -25,6 +29,20 @@ class GeneradorServiceProvider extends ServiceProvider {
         $router->pushMiddlewareToGroup('roleAuth', \App\Http\Middleware\RolesAuth::class);
         $router->pushMiddlewareToGroup('roleAuthApi', \App\Http\Middleware\RolesAuthApi::class);
         $router->pushMiddlewareToGroup('webAuth', \App\Http\Middleware\WebAuth::class);
+
+        $directorio_pantilla_auth = base_path('vendor\\tesgen\\generador\\plantillas\\config\\auth.txt');
+        $contenidoPlantillaAuth = file_get_contents($directorio_pantilla_auth);
+        ArchivoUtil::createFile(config_path(), "auth.php", $contenidoPlantillaAuth);
+
+        $directorio_pantilla_provider = base_path('vendor\\tesgen\\generador\\plantillas\\providers\\AuthServiceProvider.txt');
+        $contenidoPlantillaProvider = file_get_contents($directorio_pantilla_provider);
+        ArchivoUtil::createFile(app_path('Providers'), "AuthServiceProvider.php", $contenidoPlantillaProvider);
+
+        $this->commands([
+            InstallCommand::class,
+            ClientCommand::class,
+            KeysCommand::class,
+        ]);
     }
 
     /**

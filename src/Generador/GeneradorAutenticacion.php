@@ -4,6 +4,7 @@
 namespace TesGen\Generador\Generador;
 
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
 use TesGen\Generador\Controllers\BaseController;
 use TesGen\Generador\Modelo\Auntenticacion;
@@ -42,6 +43,10 @@ class GeneradorAutenticacion {
         $this->crearVistasRoles();
         $this->crearMiddleware();
         $this->crearTablas();
+
+        Artisan::call('passport:install');
+
+//        shell_exec('php artisan passport:install');
 
 //        $path = base_path('.env');
 //        if (file_exists($path)) {
@@ -228,6 +233,63 @@ class GeneradorAutenticacion {
                 $table->primary(['permission_id', 'role_id']);
             });
         }
+
+        if (!Schema::hasTable('oauth_auth_codes')) {
+            Schema::create('oauth_auth_codes', function (Blueprint $table) {
+                $table->string('id', 100)->primary();
+                $table->bigInteger('user_id');
+                $table->unsignedInteger('client_id');
+                $table->text('scopes')->nullable();
+                $table->boolean('revoked');
+                $table->dateTime('expires_at')->nullable();
+            });
+        }
+
+        if (!Schema::hasTable('oauth_access_tokens')) {
+            Schema::create('oauth_access_tokens', function (Blueprint $table) {
+                $table->string('id', 100)->primary();
+                $table->bigInteger('user_id')->index()->nullable();
+                $table->unsignedInteger('client_id');
+                $table->string('name')->nullable();
+                $table->text('scopes')->nullable();
+                $table->boolean('revoked');
+                $table->timestamps();
+                $table->dateTime('expires_at')->nullable();
+            });
+        }
+
+        if (!Schema::hasTable('oauth_refresh_tokens')) {
+            Schema::create('oauth_refresh_tokens', function (Blueprint $table) {
+                $table->string('id', 100)->primary();
+                $table->string('access_token_id', 100)->index();
+                $table->boolean('revoked');
+                $table->dateTime('expires_at')->nullable();
+            });
+        }
+
+        if (!Schema::hasTable('oauth_clients')) {
+            Schema::create('oauth_clients', function (Blueprint $table) {
+                $table->increments('id');
+                $table->bigInteger('user_id')->index()->nullable();
+                $table->string('name');
+                $table->string('secret', 100);
+                $table->text('redirect');
+                $table->boolean('personal_access_client');
+                $table->boolean('password_client');
+                $table->boolean('revoked');
+                $table->timestamps();
+            });
+        }
+
+        if (!Schema::hasTable('oauth_personal_access_clients')) {
+            Schema::create('oauth_personal_access_clients', function (Blueprint $table) {
+                $table->increments('id');
+                $table->unsignedInteger('client_id')->index();
+                $table->timestamps();
+            });
+        }
+
+
     }
 
     public function eliminar() {
@@ -240,7 +302,7 @@ class GeneradorAutenticacion {
 
         $archivosEliminar = [
             $directorioMiddleware => ['RolesAuth.php'],
-            $directorioRequests => ['ChangePasswordRequest.php', 'RoleCreateRequest.php','RoleUpdateRequest.php',
+            $directorioRequests => ['ChangePasswordRequest.php', 'RoleCreateRequest.php', 'RoleUpdateRequest.php',
                 'UserCreateRequest.php', 'UserUpdateRequest.php'],
             $directorioApi => ['UserController.php'],
             $directorioModelos => ['Permission.php', 'Role.php', 'User.php']
@@ -264,21 +326,32 @@ class GeneradorAutenticacion {
             ArchivoUtil::deleteFolderWithFiles($directorio);
         }
 
-        if (Schema::hasTable('permission_role')) {
-            Schema::drop('permission_role');
-        }
+        $this->eliminarTabla('permission_role');
+        $this->eliminarTabla('users');
+        $this->eliminarTabla('roles');
+        $this->eliminarTabla('permissions');
 
-        if (Schema::hasTable('users')) {
-            Schema::drop('users');
-        }
+        $this->eliminarTabla('oauth_refresh_tokens');
+        $this->eliminarTabla('oauth_clients');
+        $this->eliminarTabla('oauth_personal_access_clients');
+        $this->eliminarTabla('oauth_access_tokens');
+        $this->eliminarTabla('oauth_auth_codes');
 
-        if (Schema::hasTable('roles')) {
-            Schema::drop('roles');
-        }
-
-        if (Schema::hasTable('permissions')) {
-            Schema::drop('permissions');
-        }
+//        if (Schema::hasTable('permission_role')) {
+//            Schema::drop('permission_role');
+//        }
+//
+//        if (Schema::hasTable('users')) {
+//            Schema::drop('users');
+//        }
+//
+//        if (Schema::hasTable('roles')) {
+//            Schema::drop('roles');
+//        }
+//
+//        if (Schema::hasTable('permissions')) {
+//            Schema::drop('permissions');
+//        }
 
         $baseController = new BaseController();
 
@@ -288,6 +361,13 @@ class GeneradorAutenticacion {
         $mapeador = new Mapeador();
         $mapeador->guardarConfiguracionAutenticacion($arrayAutenticacion);
 
+    }
+
+    private function eliminarTabla($nombreTabla) {
+
+        if (Schema::hasTable($nombreTabla)) {
+            Schema::drop($nombreTabla);
+        }
     }
 
 }

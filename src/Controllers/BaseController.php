@@ -56,20 +56,23 @@ class BaseController extends Controller {
     public function index() {
 
         $lista_roles = [];
-
-        if (class_exists('App\Role')) {
-            $lista_roles = \App\Role::all();
-        }
-
         $lista_usuarios = [];
-
-        if (class_exists('App\User')) {
-//            $lista_usuarios = DB::table('users') ->join('roles', 'users.role_id', '=', 'roles.id')->get();
-            $lista_usuarios = \App\User::select('*')->join('roles', 'users.role_id', '=', 'roles.id')->get();
-        }
 
         $jsonMap = $this->obtenerJsonMapTablas();
         $jsonMapAutenticacion = $this->obtenerJsonMapAutenticacion();
+
+        if ($jsonMapAutenticacion['generado']) {
+
+            if (class_exists('App\Role')) {
+                $lista_roles = \App\Role::all();
+            }
+
+            if (class_exists('App\User')) {
+//            $lista_usuarios = DB::table('users') ->join('roles', 'users.role_id', '=', 'roles.id')->get();
+                $lista_usuarios = \App\User::select('*')->join('roles', 'users.role_id', '=', 'roles.id')->get();
+            }
+        }
+
         return view('tesgen::home')
             ->with('autenticacion_json_string', json_encode($jsonMapAutenticacion))
             ->with('tablas_json_string', json_encode($jsonMap))

@@ -46,7 +46,7 @@ class CreadorContenidoTablaHtml {
 
                     $cabeceraTabla .= str_repeat("\t", 9) . '<th>' . $columna->getNombreNatural() . '</th>' . "\n";
                     $filasTabla .= str_repeat("\t", 10) . '<td>{{$item->' .
-                        $relacion->getNombreTablaRelacion() . '->campo_referente}}</td>' . "\n";
+                        $relacion->getNombreTablaRelacion() . '->campo_referente ?? \'\'}}</td>' . "\n";
 
                 } else {
                     $cabeceraTabla .= str_repeat("\t", 9) . '<th>' . $columna->getNombreNatural() . '</th>' . "\n";

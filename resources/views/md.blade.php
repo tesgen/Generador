@@ -60,9 +60,20 @@
         }
 
         function generar() {
+
             if (verificarDatos()) {
-                generarBase(true);
+                if (todasLasTablasForaneasEstanGeneradas('principal')) {
+                    // if (todasLasTablasForaneasEstanGeneradas('detalle')) {
+                        generarBase(true);
+                    // } else {
+                    //     mostrarMensajeAdvertencia('Debes generar primero el CRUD de todas las tablas foráneas de la tabla detalle', 0, null);
+                    // }
+
+                } else {
+                    mostrarMensajeAdvertencia('Debes generar primero el CRUD de todas las tablas foráneas de la tabla principal', 0, null);
+                }
             }
+
         }
 
         function verificarDatos() {

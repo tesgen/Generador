@@ -5,7 +5,7 @@
 @endsection
 
 @section('texto-titulo')
-        <i class="nav-icon fa fa-list-alt" aria-hidden="true"></i><span> Generador CRUD</span>
+    <i class="nav-icon fa fa-list-alt" aria-hidden="true"></i><span> Generador CRUD</span>
 @endsection
 @section('contenido_propio')
 
@@ -39,10 +39,14 @@
         }
 
         function generar() {
-            if (verficarDatos()) {
-                generarBase(false);
-            }
 
+            if (verficarDatos()) {
+                if (todasLasTablasForaneasEstanGeneradas('principal')) {
+                    generarBase(false);
+                } else {
+                    mostrarMensajeAdvertencia('Debes generar primero el CRUD de todas las tablas foráneas', 0, null);
+                }
+            }
         }
 
     </script>

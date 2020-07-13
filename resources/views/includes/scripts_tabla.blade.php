@@ -883,4 +883,42 @@
 
     }
 
+    function todasLasTablasForaneasEstanGeneradas(tipoTabla) {
+
+        var tablaActual = obtenerTablaSeleccionada('combo-tabla-' + tipoTabla);
+        var nombreTabla = $(`#combo-tabla-${tipoTabla} option:selected`).text();
+
+        for (i = 0; i < tablaActual.clavesForaneas.length; i++) {
+
+            var tablaTemp;
+
+            for (let j = 0; j < tablas.length; j++) {
+
+                tablaTemp = tablas[j];
+
+                if (tablaTemp.nombreTabla === nombreTabla) {
+                    continue;
+                }
+
+                if (tipoTabla === 'detalle' && $(`#combo-tabla-principal option:selected`).text() === tablaActual.clavesForaneas[i].tabla) {
+                    continue;
+                }
+
+                if (tablaActual.clavesForaneas[i].tabla === tablaTemp.nombreTabla) {
+                    if (!tablaTemp.generado) {
+                        return false;
+                    }
+                }
+
+            }
+
+        }
+
+        return true;
+    }
+
+    function obtenerNombreTablaMaestro() {
+
+    }
+
 </script>

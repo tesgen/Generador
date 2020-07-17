@@ -108,6 +108,7 @@
         $('select').selectize();
     });
 
+
 </script>
 
 </body>

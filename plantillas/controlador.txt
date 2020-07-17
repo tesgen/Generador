@@ -12,7 +12,7 @@ class $NOMBRE_MODELO$Controller extends Controller {
     }
 
     public function create() {
-$QUERY_TABLAS_FORANEAS$        return view('$NOMBRE_TABLA$.create')$WITHS$;
+$QUERY_TABLAS_FORANEAS$$QUERY_AUTOINCREMENTAL$        return view('$NOMBRE_TABLA$.create')$WITHS$$WITHS_AUTOINCREMENTAL$;
     }
 
     public function store($NOMBRE_MODELO$CreateRequest $request) {

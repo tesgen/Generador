@@ -111,6 +111,11 @@ class Columna {
     /**
      * @var bool
      */
+    private $autoincrementalGuardar;
+
+    /**
+     * @var bool
+     */
     private $campoDeTextoActualizar;
 
     /**
@@ -465,6 +470,20 @@ class Columna {
      */
     public function setValorFormulaGuardar(string $valorFormulaGuardar): void {
         $this->valorFormulaGuardar = $valorFormulaGuardar;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAutoincrementalGuardar(): bool {
+        return $this->autoincrementalGuardar;
+    }
+
+    /**
+     * @param bool $autoincrementalGuardar
+     */
+    public function setAutoincrementalGuardar(bool $autoincrementalGuardar): void {
+        $this->autoincrementalGuardar = $autoincrementalGuardar;
     }
 
     /**

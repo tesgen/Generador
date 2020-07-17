@@ -75,8 +75,9 @@ class CreadorContenidoFuncionesFormula {
 
         $funcion .= "\n";
 
-        $funcion .= "            $(\"#" . $nombreColumna . "\").val(" . $nombreColumna . ").trigger('change');\n";
+        $funcion .= "            $(\"#" . $nombreColumna . "\").val(" . $nombreColumna . ").trigger('change');\n\n";
 
+        $funcion .= "            return " . $nombreColumna . ";\n";
         $funcion .= "        }\n\n";
 
         return $funcion;

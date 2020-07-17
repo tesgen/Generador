@@ -138,7 +138,8 @@ class CreadorContenidoCamposCrear {
                                 $columna->getNombreColumna() . '" ' . "\n";
                             $campo .= str_repeat("\t", $cantidadIndentacion + 3) . 'value="$VALOR$" type="text" id="' . $nombreColumna . '" $READ_ONLY$>' . "\n";
 
-                            if ($columna->isAutomaticoGuardar() || $columna->isFormulaGuardar()) {
+                            if ($columna->isAutomaticoGuardar() || $columna->isFormulaGuardar()
+                            || $columna->isAutoincrementalGuardar()) {
                                 $campo = str_replace('$READ_ONLY$', 'readonly', $campo);
                             } else {
                                 $campo = str_replace('$READ_ONLY$', '', $campo);
@@ -154,6 +155,8 @@ class CreadorContenidoCamposCrear {
                             } elseif ($columna->isFormulaGuardar()) {
                                 $valor = '0';
                                 $this->contenidoLimpiarCamposDetalle .= str_repeat("\t", 3) . '$("#' . $columna->getNombreColumna() . '").val(0);' . "\n";
+                            } elseif($columna->isAutoincrementalGuardar()) {
+                                $valor = '{{$' . $columna->getNombreColumna() . '_autoincremental ?? \'\'}}';
                             }
 
                             $campo = str_replace('$VALOR$', $valor, $campo);

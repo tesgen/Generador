@@ -74,6 +74,23 @@ class GeneradorControlador {
 
         $this->establecerContenidoRelaciones();
 
+        $queryAutoIncrementales = '';
+        $withAutoIncrementales = '';
+
+        foreach ($this->tabla->getColumnas() as $columna) {
+            if ($columna->isAutoincrementalGuardar()) {
+                $nombreColumna = $columna->getNombreColumna();
+
+                $queryAutoIncrementales .= "        $" . $nombreColumna . "_ultimo = " .
+                    $this->tabla->getNombreClase() . "::pluck('" . $nombreColumna . "')->last();\n";
+
+                $queryAutoIncrementales .= "        $" . $nombreColumna . "_autoincremental = $" .
+                    $nombreColumna . "_ultimo === null ? 1 : $" . $nombreColumna . "_ultimo  + 1;\n";
+
+                $withAutoIncrementales .= "\n" . '            ->with(\'' . $nombreColumna . '_autoincremental\', $' . $nombreColumna . '_autoincremental)';
+
+            }
+        }
 
         $contenidoPlantilla = str_replace('$QUERY_TABLAS_FORANEAS$', $this->contenidoQueryTablasForaneas, $contenidoPlantilla);
         $contenidoPlantilla = str_replace('$WITHS$', $this->contenidoWith, $contenidoPlantilla);
@@ -86,6 +103,8 @@ class GeneradorControlador {
         $contenidoPlantilla = str_replace('$NOMBRE_NATURAL$', $nombreNatural, $contenidoPlantilla);
         $contenidoPlantilla = str_replace('$NOMBRE_PLURAL$', $nombrePlural, $contenidoPlantilla);
         $contenidoPlantilla = str_replace('$WITH_SHOW$', $this->withShow, $contenidoPlantilla);
+        $contenidoPlantilla = str_replace('$QUERY_AUTOINCREMENTAL$', $queryAutoIncrementales, $contenidoPlantilla);
+        $contenidoPlantilla = str_replace('$WITHS_AUTOINCREMENTAL$', $withAutoIncrementales, $contenidoPlantilla);
 
         if ($esParaApi) {
             $creadorRulesCampoCreate = new CreadorRulesCampo($tabla, true);
@@ -176,13 +195,19 @@ class GeneradorControlador {
 
         $contenidoStore = '';
 
+
         if ($this->tabla->isMaestro()) {
 
             $tablaDetalle = Mapeador::getTablaDetalle($this->tabla, $this->tablas);
 
 //            $contenidoStore .= '        $input = json_decode($request->getContent(), true);' . "\n\n";
             $contenidoStore .= '        $input = $request->all();' . "\n\n";
-            $contenidoStore .= '        $' . $nombreTabla . ' = ' . $nombreClase . '::create($input);' . "\n";
+//            $contenidoStore .= '        $' . $nombreTabla . ' = ' . $nombreClase . '::create($input);' . "\n";
+
+            $contenidoStore .= '        $' . $nombreTabla . ' = ' . $nombreClase . '::make($input);' . "\n";
+            $contenidoStore .= $this->getAutoIncrementalesParaStore() . "\n";
+            $contenidoStore .= '        $' . $nombreTabla . '->save();' . "\n";
+
 //            $contenidoStore .= '        $' . $nombreTabla . ' = new ' . $nombreClase . '();' . "\n";
 //            $contenidoStore .= '        $' . $nombreTabla . '->fill($request->all());' . "\n";
 
@@ -245,7 +270,11 @@ class GeneradorControlador {
 //            $contenidoStore = "        $$nombreTabla = new $nombreClase();\n";
 //            $contenidoStore .= '        $' . $nombreTabla . '->fill($request->all());' . "\n";
 //            $contenidoStore .= "        $$nombreTabla" . "->save();" . "\n";
-            $contenidoStore .= '        $' . $nombreTabla . ' = ' . $nombreClase . '::create($request->all());' . "\n";
+//            $contenidoStore .= '        $' . $nombreTabla . ' = ' . $nombreClase . '::create($request->all());' . "\n";
+
+            $contenidoStore .= '        $' . $nombreTabla . ' = ' . $nombreClase . '::make($request->all());' . "\n";
+            $contenidoStore .= "\n" . $this->getAutoIncrementalesParaStore() . "\n";
+            $contenidoStore .= '        $' . $nombreTabla . '->save();' . "\n";
 
 //            $contenidoStore .= "        $nombreClase::insert(\$request->all());" . "\n";
 //            $contenidoStore .= "        return response()->json(true);";
@@ -253,6 +282,27 @@ class GeneradorControlador {
 
         return $contenidoStore;
 
+    }
+
+    private function getAutoIncrementalesParaStore() {
+        $autoIncrementalesParaStore = '';
+
+        foreach ($this->tabla->getColumnas() as $columna) {
+            if ($columna->isAutoincrementalGuardar()) {
+                $nombreColumna = $columna->getNombreColumna();
+
+                $autoIncrementalesParaStore .= "        $" . $nombreColumna . "_ultimo = " .
+                    $this->tabla->getNombreClase() . "::pluck('" . $nombreColumna . "')->last();\n";
+
+                $autoIncrementalesParaStore .= "        $" . $nombreColumna . "_autoincremental = $" .
+                    $nombreColumna . "_ultimo === null ? 1 : $" . $nombreColumna . "_ultimo  + 1;\n";
+
+                $autoIncrementalesParaStore .= "        $" . $this->tabla->getNombreTabla() .
+                    "->setAttribute('" . $nombreColumna . "', $" . $nombreColumna . "_autoincremental);\n";
+
+            }
+        }
+        return $autoIncrementalesParaStore;
     }
 
     private function obtenerContenidoUpdate(): string {

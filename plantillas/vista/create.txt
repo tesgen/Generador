@@ -48,7 +48,7 @@ $CAMPOS_INPUT_HTML$
     <script>
 
         $(function () {
-$CONF_DATE_TIME_PICKER$$ON_READY$
+$CONF_DATE_TIME_PICKER$$ON_READY$            $('select').selectize();
         });
 
 $FUNCIONES_PARA_FORMULA$        $.ajaxSetup({

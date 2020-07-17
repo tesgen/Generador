@@ -1,4 +1,3 @@
-
 <script type="text/javascript">
 
     var tablas = [];
@@ -91,6 +90,9 @@
 
         mostrarCamposNoVisibles(tabla, tipoTabla, true);
         mostrarCamposNoVisibles(tabla, tipoTabla, false);
+
+        habilitarDeshabilitarBotonesCamposNoVisibles(tipoTabla, true);
+        habilitarDeshabilitarBotonesCamposNoVisibles(tipoTabla, false);
     }
 
     var nestOptions = {
@@ -186,9 +188,9 @@
             '<div class="grid-stack-item sub">' +
             '   <div style="" class="grid-stack-item-content">' + n.id + '' +
             '       <button data-toggle="modal" data-target="#' + idModal + '" ' +
-            '       onclick="mostrarConfigsColumna(\'' + tipoTabla + '\', \'' + n.id + '\')">Opciones</button>' +
+            '       onclick="mostrarConfigsColumna(\'' + tipoTabla + '\', \'' + n.id + '\', false)">Opciones</button>' +
             '       <button style="float: right;" onClick="removeWidget(\'' + tipoTabla + '\', ' +
-                        esParaGuardar + ', this.parentNode.parentNode)"><span aria-hidden="true">&times;</span></button>' +
+            esParaGuardar + ', this.parentNode.parentNode)"><span aria-hidden="true">&times;</span></button>' +
             '   </div>' +
             '</div>', n);
     }
@@ -238,6 +240,24 @@
         darValorAGrid(tipoTabla, esParaGuardar, grid);
 
         $('#' + nombreIdCombo).find('option:selected').remove();
+
+        habilitarDeshabilitarBotonesCamposNoVisibles(tipoTabla, esParaGuardar);
+
+
+        if (!esParaGuardar) {
+            //volver a establecer campo actualizable a true
+            tablaSeleccionada = obtenerTablaSeleccionada(`combo-tabla-${tipoTabla}`);
+
+            for (let j = 0; j < tablaSeleccionada.columnas.length; j++) {
+
+                if (id === tablaSeleccionada.columnas[j].nombreColumna) {
+
+                    tablaSeleccionada.columnas[j].campoActualizable = true;
+                    break;
+                }
+
+            }
+        }
 
     }
 
@@ -313,6 +333,23 @@
             text: eliminado
         }));
 
+        habilitarDeshabilitarBotonesCamposNoVisibles(tipoTabla, esParaGuardar);
+
+        if (!esParaGuardar) {
+            //establecer campos no actualizable al eliminar widget
+            tablaSeleccionada = obtenerTablaSeleccionada(`combo-tabla-${tipoTabla}`);
+
+            for (let j = 0; j < tablaSeleccionada.columnas.length; j++) {
+
+                if (eliminado === tablaSeleccionada.columnas[j].nombreColumna) {
+
+                    tablaSeleccionada.columnas[j].campoActualizable = false;
+                    break;
+                }
+
+            }
+        }
+
     }
 
     var auxiliaresGuardar = [];
@@ -356,22 +393,22 @@
             '<div class="grid-stack-item sub">' +
             '   <div style="" class="grid-stack-item-content widget-auxiliar">' + n.id + '' +
             '       <button data-toggle="modal" data-target="#' + idModal + '" ' +
-            '       onclick="mostrarConfigsColumna(\'' + tipoTabla + '\', \'' + n.id + '\')">Opciones</button>' +
+            '       onclick="mostrarConfigsColumna(\'' + tipoTabla + '\', \'' + n.id + '\', false)">Opciones</button>' +
             '   </div>' +
             '</div>', n);
     }
 
-    function habilitarDeshabilitarGuardable(tipoTabla) {
-        var card = $(`#card-${tipoTabla}`);
-        var habilitado = card.find('.checkCampoGuardable').prop('checked');
-        card.find(".confColumnasGuardar :input").prop("disabled", !habilitado);
-    }
+    // function habilitarDeshabilitarGuardable(tipoTabla) {
+    //     var card = $(`#card-${tipoTabla}`);
+    //     var habilitado = card.find('.checkCampoGuardable').prop('checked');
+    //     card.find(".confColumnasGuardar :input").prop("disabled", !habilitado);
+    // }
 
     function habilitarDeshabilitarValorActualizable(tipoTabla) {
         var card = $(`#card-${tipoTabla}`);
-        var visibleActualizarHabilitado = card.find('.checkVisibleActualizar').prop('checked');
+        // var visibleActualizarHabilitado = card.find('.checkVisibleActualizar').prop('checked');
 
-        card.find(".checkCampoActualizable").prop("disabled", !visibleActualizarHabilitado);
+        // card.find(".checkCampoActualizable").prop("disabled", !visibleActualizarHabilitado);
 
         habilitarDeshabilitarActualizable(tipoTabla);
 
@@ -381,7 +418,7 @@
 
         var card = $(`#card-${tipoTabla}`);
 
-        var habilitado = card.find('.checkVisibleActualizar').prop('checked') &&
+        var habilitado = /*card.find('.checkVisibleActualizar').prop('checked') &&*/
             card.find('.checkCampoActualizable').prop('checked') && !card.find('.checkCampoActualizable').prop('disabled');
 
         card.find(".confColumnasActualizar :input").prop("disabled", !habilitado);
@@ -460,7 +497,7 @@
         habilitarDeshabilitarFormActualizar(tipoTabla);
     }
 
-    function mostrarConfigsColumna(tipoTabla, nombreColumna) {
+    function mostrarConfigsColumna(tipoTabla, nombreColumna, paraColumnaEliminada) {
 
         columnaSeleccionada = nombreColumna;
 
@@ -480,7 +517,7 @@
                 var confColumna = $(`#card-${tipoTabla}`).find(".conf-columna");
 
                 //Guardar
-                confColumna.find(".checkCampoGuardable").prop('checked', columna.campoGuardable);
+                // confColumna.find(".checkCampoGuardable").prop('checked', columna.campoGuardable);
                 confColumna.find(".radioCampoDeTextoGuardar").prop('checked', columna.campoDeTextoGuardar);
                 confColumna.find(".radioAutomaticoGuardar").prop('checked', columna.automaticoGuardar);
                 confColumna.find(".radioConjuntoDeValoresGuardar").prop('checked', columna.conjuntoDeValoresGuardar);
@@ -488,6 +525,8 @@
                 confColumna.find(".valorAutomaticoGuardar").val(columna.valorAutomaticoGuardar);
                 confColumna.find(".valorConjuntoDeValoresGuardar").val(columna.valorConjuntoDeValoresGuardar);
                 confColumna.find(".valorFormulaGuardar").val(columna.valorFormulaGuardar);
+                confColumna.find(".radioAutoincrementalGuardar").prop('checked', columna.autoincrementalGuardar);
+
                 //Validaciones Guardar
                 confColumna.find(".checkRequeridoGuardar").prop('checked', validacionesGuardar.requerido);
                 confColumna.find(".checkLongitudMinimaGuardar").prop('checked', validacionesGuardar.longitudMinima);
@@ -514,12 +553,91 @@
                 confColumna.find(".valorLongitudMaximaActualizar").val(isNaN(validacionesActualizar.valorLongitudMaxima) ? '' : validacionesActualizar.valorLongitudMaxima);
                 confColumna.find(".checkUnicoActualizar").prop('checked', validacionesActualizar.unico);
 
+                if (paraColumnaEliminada) {
+                    confColumna.find(".labelCampoDeTexto").html('NULL');
+                    // confColumna.find(".labelCampoDeTextoActualizar").html('Mismo Valor (No actualizable)');
+                    confColumna.find(".conjuntoDeValores").hide();
+                    confColumna.find(".validaciones").hide();
+                } else {
+                    confColumna.find(".labelCampoDeTexto").html('Campo de texto');
+                    confColumna.find(".conjuntoDeValores").show();
+                    confColumna.find(".validaciones").show();
+                }
+
+                if (tipoTabla === 'detalle') {
+                    confColumna.find(".autoIncremental").hide();
+                } else {
+                    confColumna.find(".autoIncremental").show();
+                }
+
+                confColumna.find(".nombreCampo").html(nombreColumna);
+
                 break;
             }
         }
 
-        habilitarDeshabilitarGuardable(tipoTabla);
+        // habilitarDeshabilitarGuardable(tipoTabla);
         habilitarDeshabilitarValorActualizable(tipoTabla);
+    }
+
+    function habilitarDeshabilitarBotonesCamposNoVisibles(tipoTabla, esParaGuardar) {
+        var card = $(`#card-${tipoTabla}`);
+
+        var nombreIdCombo;
+
+        if (esParaGuardar) {
+            nombreIdCombo = 'campos-no-visibles-guardar-' + tipoTabla;
+        } else {
+            nombreIdCombo = 'campos-no-visibles-actualizar-' + tipoTabla;
+        }
+
+        var cantidadItems = $("#" + nombreIdCombo).children('option').length;
+
+        if (esParaGuardar) {
+            card.find(".btnAgregarFormularioGuardar").prop("disabled", cantidadItems == 0);
+            card.find(".btnOpcionesCampoGuardar").prop("disabled", cantidadItems == 0);
+        } else {
+            card.find(".btnAgregarFormularioActualizar").prop("disabled", cantidadItems == 0);
+            card.find(".btnOpcionesCampoActualizar").prop("disabled", cantidadItems == 0);
+        }
+
+    }
+
+
+    function mostrarConfigsColumnaEliminada(tipoTabla, esParaGuardar) {
+
+        var card = $(`#card-${tipoTabla}`);
+
+        // var combo;
+
+        var grid;
+
+        var nombreIdCombo;
+
+        if (esParaGuardar) {
+            if (tipoTabla === 'principal') {
+                grid = gridGuardar;
+            } else {
+                grid = gridGuardarDetalle;
+            }
+            nombreIdCombo = 'campos-no-visibles-guardar-' + tipoTabla;
+
+        } else {
+            if (tipoTabla === 'principal') {
+                grid = gridActualizar;
+            } else {
+                grid = gridActualizarDetalle;
+            }
+            nombreIdCombo = 'campos-no-visibles-actualizar-' + tipoTabla;
+        }
+
+        var id = $(`#${nombreIdCombo}`).find('option:selected').attr('id');
+
+        if (id === undefined) {
+            return;
+        }
+
+        mostrarConfigsColumna(tipoTabla, id, true);
     }
 
     function establecerDatosBase(tipoTabla) {
@@ -682,6 +800,7 @@
                 var automaticoGuardar = confColumna.find(".radioAutomaticoGuardar").prop('checked');
                 var conjuntoDeValoresGuardar = confColumna.find(".radioConjuntoDeValoresGuardar").prop('checked');
                 var formulaGuardar = confColumna.find(".radioFormulaGuardar").prop('checked');
+                var autoincrementalGuardar = confColumna.find(".radioAutoincrementalGuardar").prop('checked');
 
                 var valorAutomaticoGuardar = confColumna.find(".valorAutomaticoGuardar").val();
                 var valorConjuntoDeValoresGuardar = confColumna.find(".valorConjuntoDeValoresGuardar").val();
@@ -692,6 +811,7 @@
                 tablaSeleccionada.columnas[j].automaticoGuardar = automaticoGuardar;
                 tablaSeleccionada.columnas[j].conjuntoDeValoresGuardar = conjuntoDeValoresGuardar;
                 tablaSeleccionada.columnas[j].formulaGuardar = formulaGuardar;
+                tablaSeleccionada.columnas[j].autoincrementalGuardar = autoincrementalGuardar;
 
                 tablaSeleccionada.columnas[j].valorAutomaticoGuardar = valorAutomaticoGuardar;
                 tablaSeleccionada.columnas[j].valorConjuntoDeValoresGuardar = valorConjuntoDeValoresGuardar;
@@ -915,10 +1035,6 @@
         }
 
         return true;
-    }
-
-    function obtenerNombreTablaMaestro() {
-
     }
 
 </script>

@@ -81,8 +81,14 @@
 
                                 </select>
                             </div>
-                            <button class="btn btn-info" onclick="agregarNoVisibleAForm('{{$tipoTabla}}', true)">
-                                Agregar
+                            <button class="btn btn-info btnAgregarFormularioGuardar" onclick="agregarNoVisibleAForm('{{$tipoTabla}}', true)">
+                                Agregar a Formulario
+                            </button>
+                            &nbsp;
+                            <button
+                                data-toggle="modal" data-target="#{{'modal-guardar-' . $tipoTabla}}"
+                                class="btn btn-light btnOpcionesCampoGuardar" onclick="mostrarConfigsColumnaEliminada('{{$tipoTabla}}', true)">
+                                Opciones
                             </button>
                         </div>
                         @include('tesgen::includes.conf_columna_guardar', ["tipoTabla' => '{{$tipoTabla}}"])
@@ -119,9 +125,15 @@
 
                                         </select>
                                     </div>
-                                    <button class="btn btn-info"
+                                    <button class="btn btn-info btnAgregarFormularioActualizar"
                                             onclick="agregarNoVisibleAForm('{{$tipoTabla}}', false)">
-                                        Agregar
+                                        Agregar a Formulario
+                                    </button>
+                                    &nbsp;
+                                    <button
+                                        data-toggle="modal" data-target="#{{'modal-actualizar-' . $tipoTabla}}"
+                                        class="btn btn-light btnOpcionesCampoActualizar" onclick="mostrarConfigsColumnaEliminada('{{$tipoTabla}}', false)">
+                                        Opciones
                                     </button>
                                 </div>
                                 @include('tesgen::includes.conf_columna_actualizar', ["tipoTabla' => '{{$tipoTabla}}"])

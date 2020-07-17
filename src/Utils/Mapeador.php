@@ -135,6 +135,7 @@ class Mapeador {
                     'valorAutomaticoGuardar' => '',
                     'valorConjuntoDeValoresGuardar' => '',
                     'valorFormulaGuardar' => '',
+                    'autoincrementalGuardar' => false,
                     'campoDeTextoActualizar' => true,
                     'automaticoActualizar' => false,
                     'conjuntoDeValoresActualizar' => false,

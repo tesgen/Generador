@@ -15,7 +15,7 @@ class CreadorContenidoAjax {
 
             $nombreColumna = $columna->getNombreColumna();
 
-            if ($nombreColumna === $tabla->getClavePrimaria()) {
+            if ($nombreColumna === $tabla->getClavePrimaria() || $columna->isAutoincrementalGuardar()) {
                 continue;
             }
 
@@ -27,15 +27,39 @@ class CreadorContenidoAjax {
                     }
                     $contenido .= ",\n";
                 } else {
-                    $contenido .= "                    $nombreColumna: null,\n";
+
+                    $valorPorDefecto = '';
+
+                    if($columna->isAutomaticoGuardar()) {
+                        $valorPorDefecto = "'" . $columna->getValorAutomaticoGuardar() . "'";
+                    } else if($columna->isFormulaGuardar()) {
+                        $valorPorDefecto = "calcular_" . $columna->getNombreColumna() . "()";
+                    } else {
+                        $valorPorDefecto = 'null';
+                    }
+                    $contenido .= "                    $nombreColumna: ${valorPorDefecto},\n";
                 }
             } else {
-                if ($columna->isVisibleEnFormularioActualizar() && $columna->isCampoActualizable()) {
-                    $contenido .= "                    $nombreColumna: $(\"#$nombreColumna\").val()";
-                    if ($columna->getTipo() === 'date') {
-                        $contenido .= ".split(\"/\").reverse().join(\"-\")";
+                if (/*$columna->isVisibleEnFormularioActualizar() && */$columna->isCampoActualizable()) {
+                    if ($columna->isVisibleEnFormularioActualizar()) {
+                        $contenido .= "                    $nombreColumna: $(\"#$nombreColumna\").val()";
+                        if ($columna->getTipo() === 'date') {
+                            $contenido .= ".split(\"/\").reverse().join(\"-\")";
+                        }
+                        $contenido .= ",\n";
+                    } else {
+                        $valorPorDefecto = '';
+
+                        if($columna->isAutomaticoActualizar()) {
+                            $valorPorDefecto = "'" . $columna->getValorAutomaticoActualizar() . "'";
+                        } else if($columna->isFormulaActualizar()) {
+                            $valorPorDefecto = "calcular_" . $columna->getNombreColumna() . "()";
+                        } else {
+                            $valorPorDefecto = 'null';
+                        }
+                        $contenido .= "                    $nombreColumna: ${valorPorDefecto},\n";
                     }
-                    $contenido .= ",\n";
+
                 }
             }
 

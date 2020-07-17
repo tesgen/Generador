@@ -230,6 +230,7 @@ class BaseController extends Controller {
                             $columna['valorAutomaticoGuardar'] = $datoColumna['valorAutomaticoGuardar'];
                             $columna['valorConjuntoDeValoresGuardar'] = $datoColumna['valorConjuntoDeValoresGuardar'];
                             $columna['valorFormulaGuardar'] = $datoColumna['valorFormulaGuardar'];
+                            $columna['autoincrementalGuardar'] = $datoColumna['autoincrementalGuardar'];
                             $columna['campoDeTextoActualizar'] = $datoColumna['campoDeTextoActualizar'];
                             $columna['automaticoActualizar'] = $datoColumna['automaticoActualizar'];
                             $columna['conjuntoDeValoresActualizar'] = $datoColumna['conjuntoDeValoresActualizar'];
@@ -399,8 +400,10 @@ class BaseController extends Controller {
 //
 //            $arrayCampoNoAgregables = ['created_at', 'updated_at'];
 //
-//            foreach ($t['columnas'] as $keyC => $c) {
+            foreach ($t['columnas'] as $keyC => $c) {
 //
+                $arrayTablas[$key]['columnas'][$keyC]['autoincrementalGuardar'] = false;
+
 //                $visible = !$c['autoIncrement'] && !in_array($c['nombreColumna'], $arrayCampoNoAgregables);
 //
 //                if ($visible) {
@@ -426,7 +429,7 @@ class BaseController extends Controller {
 ////                $arrayTablas[$key]['columnas'][$keyC]['validacionesActualizar'] = $validaciones;
 ////                $arrayTablas[$key]['columnas'][$keyC]['validacionesGuardar'] = [];
 ////                $arrayTablas[$key]['columnas'][$keyC]['validacionesActualizar'] = [];
-//            }
+            }
         }
 
         $this->mapeador->guardarConfiguracionTablas($arrayTablas);
@@ -594,6 +597,7 @@ class BaseController extends Controller {
                 $columna->setValorAutomaticoGuardar($c['valorAutomaticoGuardar']);
                 $columna->setValorConjuntoDeValoresGuardar($c['valorConjuntoDeValoresGuardar']);
                 $columna->setValorFormulaGuardar($c['valorFormulaGuardar']);
+                $columna->setAutoincrementalGuardar($c['autoincrementalGuardar']);
                 $columna->setCampoDeTextoActualizar($c['campoDeTextoActualizar']);
                 $columna->setAutomaticoActualizar($c['automaticoActualizar']);
                 $columna->setConjuntoDeValoresActualizar($c['conjuntoDeValoresActualizar']);

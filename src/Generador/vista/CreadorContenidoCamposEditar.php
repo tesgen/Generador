@@ -170,13 +170,13 @@ class CreadorContenidoCamposEditar {
 
                             $readOnly = '';
 
-                            if (!$esIgualQueGuardar) {
-                                if (($columna->isCampoActualizable() && ($columna->isAutomaticoActualizar() || $columna->isFormulaActualizar()))
-                                    || (!$columna->isCampoActualizable())) {
+                            if ($esIgualQueGuardar) {
+                                if ($columna->isAutomaticoGuardar() || $columna->isFormulaGuardar() || $columna->isAutoincrementalGuardar()) {
                                     $readOnly = 'readonly';
                                 }
                             } else {
-                                if ($columna->isAutomaticoGuardar() || $columna->isFormulaGuardar()) {
+                                if (($columna->isCampoActualizable() && ($columna->isAutomaticoActualizar() || $columna->isFormulaActualizar()))
+                                    || (!$columna->isCampoActualizable())) {
                                     $readOnly = 'readonly';
                                 }
                             }
@@ -194,6 +194,8 @@ class CreadorContenidoCamposEditar {
                                 } elseif ($columna->isFormulaGuardar()) {
                                     $valor = '{{$' . $nombreTabla . '->' . $columna->getNombreColumna() . ' ?? \'\'}}';
                                     $this->contenidoLimpiarCamposDetalle .= str_repeat("\t", 3) . '$("#' . $columna->getNombreColumna() . '").val(0);' . "\n";
+                                } else if ($columna->isAutoincrementalGuardar()) {
+                                    $valor = '{{$' . $nombreTabla . '->' . $columna->getNombreColumna() . ' ?? \'\'}}';
                                 }
                             } else {
                                 if ($columna->isCampoDeTextoActualizar()) {

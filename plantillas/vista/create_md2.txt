@@ -93,7 +93,7 @@ $CABECERA_TABLA_DETALLE$                                                <th></th
     <script>
 
         $(function () {
-$CONF_DATE_TIME_PICKER$$ON_READY$$ON_READY_DETALLE$        });
+$CONF_DATE_TIME_PICKER$$ON_READY$$ON_READY_DETALLE$            $('select').selectize();        });
 
 $FUNCIONES_PARA_FORMULA$$FUNCIONES_PARA_FORMULA_DETALLE$        $.ajaxSetup({
             headers: {

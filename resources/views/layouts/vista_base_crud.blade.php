@@ -53,6 +53,14 @@
 
     @include('tesgen::includes.scripts_tabla')
     @yield('scripts_propios')
+    <script>
+
+        $(function () {
+            // habilitarDeshabilitarBotonesCamposNoVisibles('principal', true);
+            // habilitarDeshabilitarBotonesCamposNoVisibles('principal', false);
+        });
+
+    </script>
 
 @endsection
 

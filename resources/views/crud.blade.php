@@ -16,6 +16,7 @@
 
         $(function () {
             mostrarDatosTabla('principal');
+
         });
 
         function guardar() {

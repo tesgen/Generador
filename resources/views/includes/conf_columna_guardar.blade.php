@@ -9,6 +9,9 @@
                 </button>
             </div>
             <div class="modal-body">
+
+                <strong>Nombre de Campo: </strong> <span class="nombreCampo"></span>
+                <br>
 {{--                Valor Guardable: --}}
                 <input style="display: none" type="checkbox"
                                         onclick="habilitarDeshabilitarGuardable('{{$tipoTabla}}')"
@@ -19,7 +22,7 @@
                     <div class="form-group col-sm-12">
                         <input type="radio" class="radioCampoDeTextoGuardar"
                                name="radioValorGuardar">
-                        <label>&nbsp;Campo de texto</label>
+                        <label>&nbsp;<div class="labelCampoDeTexto">Campo de texto</div></label>
                     </div>
                     <div class="form-group col-sm-12">
                         <input type="radio" class="radioAutomaticoGuardar"
@@ -27,7 +30,7 @@
                         <label>&nbsp;Automático:</label>
                         <input type="text" class="form-control valorAutomaticoGuardar">
                     </div>
-                    <div class="form-group col-sm-12">
+                    <div class="form-group col-sm-12 conjuntoDeValores">
                         <input type="radio" class="radioConjuntoDeValoresGuardar"
                                name="radioValorGuardar"><label>&nbsp;Conjunto de
                             valores:</label>
@@ -38,25 +41,32 @@
                                name="radioValorGuardar"><label>&nbsp;Fórmula:</label>
                         <input type="text" class="form-control valorFormulaGuardar">
                     </div>
-                    <hr>
-                    Validaciones:
-                    <div class="form-group col-sm-12">
-                        <input type="checkbox" class="checkRequeridoGuardar">
-                        <label>&nbsp;Requerido</label>
+                    <div class="form-group col-sm-12 autoIncremental">
+                        <input type="radio" class="radioAutoincrementalGuardar"
+                               name="radioValorGuardar">
+                        <label>&nbsp;Autoincremental</label>
                     </div>
-                    <div class="form-group col-sm-12">
-                        <input type="checkbox" class="checkLongitudMinimaGuardar">
-                        <label>&nbsp;Longitud Mínima:</label>
-                        <input type="text" class="form-control valorLongitudMinimaGuardar">
-                    </div>
-                    <div class="form-group col-sm-12">
-                        <input type="checkbox" class="checkLongitudMaximaGuardar">
-                        <label>&nbsp;Longitud Máxima:</label>
-                        <input type="text" class="form-control valorLongitudMaximaGuardar">
-                    </div>
-                    <div class="form-group col-sm-12">
-                        <input type="checkbox" class="checkUnicoGuardar">
-                        <label>&nbsp;Único</label>
+                    <div class="validaciones">
+                        <hr>
+                        Validaciones:
+                        <div class="form-group col-sm-12">
+                            <input type="checkbox" class="checkRequeridoGuardar">
+                            <label>&nbsp;Requerido</label>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <input type="checkbox" class="checkLongitudMinimaGuardar">
+                            <label>&nbsp;Longitud Mínima:</label>
+                            <input type="text" class="form-control valorLongitudMinimaGuardar">
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <input type="checkbox" class="checkLongitudMaximaGuardar">
+                            <label>&nbsp;Longitud Máxima:</label>
+                            <input type="text" class="form-control valorLongitudMaximaGuardar">
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <input type="checkbox" class="checkUnicoGuardar">
+                            <label>&nbsp;Único</label>
+                        </div>
                     </div>
                 </div>
 

@@ -10,6 +10,8 @@
             </div>
             <div class="modal-body">
 
+                <strong>Nombre de Campo: </strong> <span class="nombreCampo"></span>
+                <br>
                 {{--                Visible: --}}
                 <input style="display: none" type="checkbox"
                        onclick="habilitarDeshabilitarValorActualizable('{{$tipoTabla}}')"
@@ -25,7 +27,7 @@
                     <div class="form-group col-sm-12">
                         <input type="radio" class="radioCampoDeTextoActualizar"
                                name="radioValorActualizar">
-                        <label>&nbsp;Campo de texto</label>
+                        <label>&nbsp;<div class="labelCampoDeTexto">Campo de texto</div></label>
                     </div>
                     <div class="form-group col-sm-12">
                         <input type="radio" class="radioAutomaticoActualizar"
@@ -33,7 +35,7 @@
                         <label>&nbsp;Automático:</label>
                         <input type="text" class="form-control valorAutomaticoActualizar">
                     </div>
-                    <div class="form-group col-sm-12">
+                    <div class="form-group col-sm-12 conjuntoDeValores">
                         <input type="radio" class="radioConjuntoDeValoresActualizar"
                                name="radioValorActualizar"><label>&nbsp;Conjunto de
                             valores:</label>
@@ -45,26 +47,29 @@
                                name="radioValorActualizar"><label>&nbsp;Fórmula:</label>
                         <input type="text" class="form-control valorFormulaActualizar">
                     </div>
-                    <hr>
-                    Validaciones:
-                    <div class="form-group col-sm-12">
-                        <input type="checkbox" class="checkRequeridoActualizar">
-                        <label>&nbsp;Requerido</label>
+                    <div class="validaciones">
+                        <hr>
+                        Validaciones:
+                        <div class="form-group col-sm-12">
+                            <input type="checkbox" class="checkRequeridoActualizar">
+                            <label>&nbsp;Requerido</label>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <input type="checkbox" class="checkLongitudMinimaActualizar">
+                            <label>&nbsp;Longitud Mínima:</label>
+                            <input type="text" class="form-control valorLongitudMinimaActualizar">
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <input type="checkbox" class="checkLongitudMaximaActualizar">
+                            <label>&nbsp;Longitud Máxima:</label>
+                            <input type="text" class="form-control valorLongitudMaximaActualizar">
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <input type="checkbox" class="checkUnicoActualizar">
+                            <label>&nbsp;Único</label>
+                        </div>
                     </div>
-                    <div class="form-group col-sm-12">
-                        <input type="checkbox" class="checkLongitudMinimaActualizar">
-                        <label>&nbsp;Longitud Mínima:</label>
-                        <input type="text" class="form-control valorLongitudMinimaActualizar">
-                    </div>
-                    <div class="form-group col-sm-12">
-                        <input type="checkbox" class="checkLongitudMaximaActualizar">
-                        <label>&nbsp;Longitud Máxima:</label>
-                        <input type="text" class="form-control valorLongitudMaximaActualizar">
-                    </div>
-                    <div class="form-group col-sm-12">
-                        <input type="checkbox" class="checkUnicoActualizar">
-                        <label>&nbsp;Único</label>
-                    </div>
+
                 </div>
 
             </div>

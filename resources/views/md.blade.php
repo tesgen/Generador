@@ -51,6 +51,8 @@
         $(function () {
             mostrarDatosTabla('principal');
             mostrarDatosTabla('detalle');
+            habilitarDeshabilitarBotonesCamposNoVisibles('detalle', true);
+            habilitarDeshabilitarBotonesCamposNoVisibles('detalle', false);
         });
 
         function guardar() {

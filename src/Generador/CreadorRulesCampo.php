@@ -33,6 +33,10 @@ class CreadorRulesCampo {
 
         foreach ($tabla->getColumnas() as $columna) {
 
+            if ($columna->isAutoincrementalGuardar()) {
+                continue;
+            }
+
             if ($esParaGuardar || (!$esParaGuardar && $tabla->isFormActualizarIgualQueGuardar())) {
                 if (($columna->getNombreColumna() === $tabla->getClavePrimaria() && $columna->isAutoIncrement())
                     || !$columna->isCampoGuardable()) {

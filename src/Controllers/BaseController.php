@@ -328,6 +328,7 @@ class BaseController extends Controller {
         $generadorModelo = new GeneradorModelo();
         $generadorModelo->generar($this->tablaActual, $this->tablas);
 
+
         //Generar controlador
         $generadorControlador = new GeneradorControlador();
         $generadorControlador->generar($this->tablaActual, $this->tablas, false);

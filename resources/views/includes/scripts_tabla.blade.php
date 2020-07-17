@@ -666,7 +666,7 @@
 
                 var nombreColumna = row.cells[columnaNombreColumna].innerText;
                 var nombreNatural = row.cells[columnaNombreNatural].innerText;
-                nombreNatural = nombreNatural.replace(/\u00A0/, " ").trim();
+                // nombreNatural = nombreNatural.replace(/\u00A0/, " ").trim();
 
                 if (tablaSeleccionada.columnas[j].nombreColumna === nombreColumna) {
 
@@ -918,6 +918,9 @@
         $.ajax({
             type: 'POST',
             data: getDatos(esParaMd),
+            contentType: "application/json",
+            scriptCharset: "utf-8" ,
+            // contentType: "application/x-www-form-urlencoded;charset=ISO-8859-15",
             url: '{{url('/generador/guardar')}}',
             beforeSend: function () {
                 $('#spinnerModal').show();
@@ -955,6 +958,9 @@
         $.ajax({
             type: 'POST',
             data: getDatos(esParaMd),
+            contentType: "application/json",
+            scriptCharset: "utf-8" ,
+            // contentType: "application/x-www-form-urlencoded;charset=ISO-8859-15",
             url: '{{url('/generador/guardar_y_generar')}}',
             beforeSend: function () {
                 $('#spinnerModal').show();

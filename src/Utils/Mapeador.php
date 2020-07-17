@@ -229,7 +229,7 @@ class Mapeador {
     }
 
     private function guardarConfiguracion($contenidoJson) {
-        $jsonString = json_encode($contenidoJson, JSON_PRETTY_PRINT);
+        $jsonString = json_encode($contenidoJson, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
         file_put_contents($this->archivoJson, stripslashes($jsonString));
     }
 

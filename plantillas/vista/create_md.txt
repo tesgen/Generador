@@ -18,12 +18,12 @@
                             <i class="fa fa-plus-square-o fa-lg"></i>
                             <strong>Crear $NOMBRE_NATURAL$</strong>
                         </div>
-                        <div class="card-body bg-light">
+                        <div class="card-body">
                             <div class="card">
                                 <div class="card-header">
                                     Datos de $NOMBRE_NATURAL$
                                 </div>
-                                <div class="card-body bg-light">
+                                <div class="card-body">
                                     <div class="alert alert-danger alert-dismissible fade show print-error-msg"
                                          style="display:none">
                                         <ul></ul>
@@ -38,9 +38,9 @@ $CAMPOS_MAESTRO$                                    </form>
                             </div>
                             <div class="card">
                                 <div class="card-header">
-                                    Datos de Detalle
+                                    Datos de $NOMBRE_NATURAL_AUXILIAR$
                                 </div>
-                                <div class="card-body bg-light">
+                                <div class="card-body">
                                     <form action="#" id="formDetalle" onsubmit="return false">
 $CAMPOS_AUXILIAR$
                                         <div class="form-group col-sm-12">
@@ -53,15 +53,14 @@ $CAMPOS_AUXILIAR$
                             </div>
                             <div class="card">
                                 <div class="card-header">
-                                    Lista de Detalles
+                                    Lista de $NOMBRE_PLURAL_AUXILIAR$
                                 </div>
-                                <div class="card-body bg-light">
+                                <div class="card-body">
                                     <div class="form-group col-sm-12">
                                         <table id="tabla" class="table table-responsive-sm table-striped table-sm">
                                             <thead>
                                             <tr>
-$CABECERA_TABLA_DETALLE$                                                <th></th>
-                                            </tr>
+$CABECERA_TABLA_DETALLE$                                            </tr>
                                             </thead>
                                             <tbody>
                                             </tbody>
@@ -110,37 +109,20 @@ $FUNCIONES_PARA_FORMULA$$FUNCIONES_PARA_FORMULA_DETALLE$        $.ajaxSetup({
                 var formDetalle = $("#formDetalle");
 
                 if (!formDetalle.valid()) {
-                    mostrarMensajeAdvertencia('Debes rellenar los campos de detalle correctamente', 0, null);
+                    mostrarMensajeAdvertencia('Debes rellenar los campos de $NOMBRE_NATURAL_AUXILIAR$ correctamente', 0, null);
                     return;
                 }
 
-$DEFINICION_VARIABLES_JS_DETALLE$                var campo_referente = $(`#$ID_TABLA_AUXILIAR$ option:selected`).text();
+$DEFINICION_VARIABLES_JS_DETALLE$
+                var detalle = {
+$ASIGNACION_VARIABLES_JS_DETALLE$
+                };
 
-                if (yaEstaAgregadoDetalle($ID_TABLA_AUXILIAR$)) {
-                    mostrarMensajeAdvertencia('Este ítem ya esta agregado a la lista', 0, null);
-                } else {
-
-                    var detalle = {
-$ASIGNACION_VARIABLES_JS_DETALLE$                        campo_referente: campo_referente
-                    };
-
-                    detalles.push(detalle);
-                    actualizarDetalle();
-                    limpiarCamposDetalle();
-                }
+                detalles.push(detalle);
+                actualizarDetalle();
+                limpiarCamposDetalle();
             });
         });
-
-        function yaEstaAgregadoDetalle($ID_TABLA_AUXILIAR$_a_agregar) {
-
-            for (var i = 0; i < detalles.length; i++) {
-                if (detalles[i].$ID_TABLA_AUXILIAR$ === $ID_TABLA_AUXILIAR$_a_agregar) {
-                    return true;
-                }
-            }
-
-            return false;
-        }
 
         function actualizarDetalle() {
             var tbody = $("#tabla tbody");
@@ -148,23 +130,9 @@ $ASIGNACION_VARIABLES_JS_DETALLE$                        campo_referente: campo_
             for (var i = 0; i < detalles.length; i++) {
                 var nuevaFila = "" +
                     "<tr>" +
-$FILAS_TABLA_DETALLE$                    "<td><button type=\"submit\" class=\"btn btn-danger eliminar\" onclick=\"eliminarItem('" + detalles[i].$ID_TABLA_AUXILIAR$ + "')\"><i class=\"fa fa-trash\"></i></button></td>" +
-                    "</tr>";
+$FILAS_TABLA_DETALLE$                    "</tr>";
                 tbody.append(nuevaFila);
             }
-        }
-
-        function eliminarItem($ID_TABLA_AUXILIAR$_a_eliminar) {
-
-            for (var i = 0; i < detalles.length; i++) {
-
-                if (detalles[i].$ID_TABLA_AUXILIAR$ === $ID_TABLA_AUXILIAR$_a_eliminar) {
-
-                    detalles.splice(i, 1);
-                    break;
-                }
-            }
-            actualizarDetalle();
         }
 
         function limpiarCamposDetalle() {

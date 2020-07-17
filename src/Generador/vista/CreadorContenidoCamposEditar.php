@@ -104,7 +104,7 @@ class CreadorContenidoCamposEditar {
                 //campo no sea id o autoincremental y sea guardable
                 $campoMostrable = (($columna->getNombreColumna() !== $tabla->getClavePrimaria() || !$columna->isAutoIncrement())
                         && (($columna->isVisibleEnFormularioActualizar() && !$esIgualQueGuardar) ||
-                            ($columna->isCampoGuardable() && $esIgualQueGuardar)))
+                            ($columna->isCampoMostrable() && $esIgualQueGuardar)))
                     && ($idTablaMaestro !== $nombreColumna);
 
                 if ($campoMostrable) {

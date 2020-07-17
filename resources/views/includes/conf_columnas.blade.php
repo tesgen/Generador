@@ -24,7 +24,7 @@
                 <nav>
                     <div class="nav nav-tabs" role="tablist">
 
-                        <a class="nav-item nav-link" id="nav-tabla-{{$tipoTabla}}-tab" data-toggle="tab"
+                        <a @if($tipoTabla == 'detalle') hidden @endif class="nav-item nav-link" id="nav-tabla-{{$tipoTabla}}-tab" data-toggle="tab"
                            href="#nav-tabla-{{$tipoTabla}}" role="tab"
                            aria-controls="nav-tabla-{{$tipoTabla}}" aria-selected="false">Tabla HTML</a>
 

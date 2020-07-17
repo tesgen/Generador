@@ -90,95 +90,116 @@ class CreadorContenidoCamposCrear {
 
                 //campo no sea id o autoincremental y sea guardable
                 $campoMostrable = (($columna->getNombreColumna() !== $tabla->getClavePrimaria() || !$columna->isAutoIncrement())
-                        && $columna->isCampoGuardable()) && ($idTablaMaestro !== $nombreColumna);
+                        /*&& $columna->isCampoMostrable()*/) && ($idTablaMaestro !== $nombreColumna);
 
                 if ($campoMostrable) {
 
-                    $campo .= str_repeat("\t", $cantidadIndentacion + 1) . '<div class="form-group col-md-' . $bloque['width'] . '">' . "\n";
-                    $campo .= str_repeat("\t", $cantidadIndentacion + 2) . '<label for="' . $nombreColumna . '">' . $nombreNatural . '</label>' . "\n";
+                    if ($columna->isCampoMostrable()) {
 
-                    if ($esClaveForanea) {
+                        $campo .= str_repeat("\t", $cantidadIndentacion + 1) . '<div class="form-group col-md-' . $bloque['width'] . '">' . "\n";
+                        $campo .= str_repeat("\t", $cantidadIndentacion + 2) . '<label for="' . $nombreColumna . '">' . $nombreNatural . '</label>' . "\n";
 
-                        $tablaRelacion = Mapeador::getTablaRelacion($tabla, $columna);
+                        if ($esClaveForanea) {
 
-                        $nombreTablaRelacion = $tablaRelacion->getNombreTablaRelacion();
-                        $nombreIdTablaRelacion = $tablaRelacion->getNombreIdTablaRelacion();
+                            $tablaRelacion = Mapeador::getTablaRelacion($tabla, $columna);
 
-                        $campo .= str_repeat("\t", $cantidadIndentacion + 1) . '<select class="form-control" id="' . $columna->getNombreColumna() . '" name="' . $columna->getNombreColumna() . '">' . "\n";
-                        $campo .= str_repeat("\t", $cantidadIndentacion + 2) . '@foreach($lista_' . $nombreTablaRelacion . ' as $' . $nombreTablaRelacion . ')' . "\n";
-                        $campo .= str_repeat("\t", $cantidadIndentacion + 3) . '<option value="{{$' . $nombreTablaRelacion . '->' . $nombreIdTablaRelacion . '}}"' . "\n";
-                        $campo .= str_repeat("\t", $cantidadIndentacion + 4) . '{{ ($' . $nombreTablaRelacion . '->' . $nombreIdTablaRelacion . ' == ($' . $nombreTabla . '->' . $columna->getNombreColumna() . ' ?? \'\') ? "selected" : "") }}>' . "\n";
-                        $campo .= str_repeat("\t", $cantidadIndentacion + 4) . '{{$' . $nombreTablaRelacion . '->campo_referente}}' . "\n";
-                        $campo .= str_repeat("\t", $cantidadIndentacion + 3) . '</option>' . "\n";
-                        $campo .= str_repeat("\t", $cantidadIndentacion + 2) . '@endforeach' . "\n";
-                        $campo .= str_repeat("\t", $cantidadIndentacion + 1) . '</select>' . "\n";
+                            $nombreTablaRelacion = $tablaRelacion->getNombreTablaRelacion();
+                            $nombreIdTablaRelacion = $tablaRelacion->getNombreIdTablaRelacion();
 
-                        $this->contenidoLimpiarCamposDetalle .= str_repeat("\t", 3) . '$("#' . $columna->getNombreColumna() . '").prop(\'selectedIndex\', 0);' . "\n";
-
-                    } else {
-
-                        if ($columna->isConjuntoDeValoresGuardar()) {
-
-                            $valores = explode(",", $columna->getValorConjuntoDeValoresGuardar());
-
-                            $campo .= str_repeat("\t", $cantidadIndentacion + 1) . '<select class="form-control" id="' . $nombreColumna . '" name="' . $nombreColumna . '">' . "\n";
-
-                            foreach ($valores as $valor) {
-                                $campo .= str_repeat("\t", $cantidadIndentacion + 3) . '<option value="' . $valor . '">' . "\n";
-                                $campo .= str_repeat("\t", $cantidadIndentacion + 4) . $valor . "\n";
-                                $campo .= str_repeat("\t", $cantidadIndentacion + 3) . '</option>' . "\n";
-                            }
-
+                            $campo .= str_repeat("\t", $cantidadIndentacion + 1) . '<select class="form-control" id="' . $columna->getNombreColumna() . '" name="' . $columna->getNombreColumna() . '">' . "\n";
+                            $campo .= str_repeat("\t", $cantidadIndentacion + 2) . '@foreach($lista_' . $nombreTablaRelacion . ' as $' . $nombreTablaRelacion . ')' . "\n";
+                            $campo .= str_repeat("\t", $cantidadIndentacion + 3) . '<option value="{{$' . $nombreTablaRelacion . '->' . $nombreIdTablaRelacion . '}}"' . "\n";
+                            $campo .= str_repeat("\t", $cantidadIndentacion + 4) . '{{ ($' . $nombreTablaRelacion . '->' . $nombreIdTablaRelacion . ' == ($' . $nombreTabla . '->' . $columna->getNombreColumna() . ' ?? \'\') ? "selected" : "") }}>' . "\n";
+                            $campo .= str_repeat("\t", $cantidadIndentacion + 4) . '{{$' . $nombreTablaRelacion . '->campo_referente}}' . "\n";
+                            $campo .= str_repeat("\t", $cantidadIndentacion + 3) . '</option>' . "\n";
+                            $campo .= str_repeat("\t", $cantidadIndentacion + 2) . '@endforeach' . "\n";
                             $campo .= str_repeat("\t", $cantidadIndentacion + 1) . '</select>' . "\n";
+
                             $this->contenidoLimpiarCamposDetalle .= str_repeat("\t", 3) . '$("#' . $columna->getNombreColumna() . '").prop(\'selectedIndex\', 0);' . "\n";
 
                         } else {
 
-                            $campo .= str_repeat("\t", $cantidadIndentacion + 1) . '<input class="form-control" name="' .
-                                $columna->getNombreColumna() . '" ' . "\n";
-                            $campo .= str_repeat("\t", $cantidadIndentacion + 3) . 'value="$VALOR$" type="text" id="' . $nombreColumna . '" $READ_ONLY$>' . "\n";
+                            if ($columna->isConjuntoDeValoresGuardar()) {
 
-                            if ($columna->isAutomaticoGuardar() || $columna->isFormulaGuardar()
-                            || $columna->isAutoincrementalGuardar()) {
-                                $campo = str_replace('$READ_ONLY$', 'readonly', $campo);
+                                $valores = explode(",", $columna->getValorConjuntoDeValoresGuardar());
+
+                                $campo .= str_repeat("\t", $cantidadIndentacion + 1) . '<select class="form-control" id="' . $nombreColumna . '" name="' . $nombreColumna . '">' . "\n";
+
+                                foreach ($valores as $valor) {
+                                    $campo .= str_repeat("\t", $cantidadIndentacion + 3) . '<option value="' . $valor . '">' . "\n";
+                                    $campo .= str_repeat("\t", $cantidadIndentacion + 4) . $valor . "\n";
+                                    $campo .= str_repeat("\t", $cantidadIndentacion + 3) . '</option>' . "\n";
+                                }
+
+                                $campo .= str_repeat("\t", $cantidadIndentacion + 1) . '</select>' . "\n";
+                                $this->contenidoLimpiarCamposDetalle .= str_repeat("\t", 3) . '$("#' . $columna->getNombreColumna() . '").prop(\'selectedIndex\', 0);' . "\n";
+
                             } else {
-                                $campo = str_replace('$READ_ONLY$', '', $campo);
-                            }
 
-                            $valor = '';
+                                $campo .= str_repeat("\t", $cantidadIndentacion + 1) . '<input class="form-control" name="' .
+                                    $columna->getNombreColumna() . '" ' . "\n";
+                                $campo .= str_repeat("\t", $cantidadIndentacion + 3) . 'value="$VALOR$" type="text" id="' . $nombreColumna . '" $READ_ONLY$>' . "\n";
 
-                            if ($columna->isCampoDeTextoGuardar()) {
+                                if ($columna->isAutomaticoGuardar() || $columna->isFormulaGuardar()
+                                    || $columna->isAutoincrementalGuardar()) {
+                                    $campo = str_replace('$READ_ONLY$', 'readonly', $campo);
+                                } else {
+                                    $campo = str_replace('$READ_ONLY$', '', $campo);
+                                }
+
                                 $valor = '';
-                                $this->contenidoLimpiarCamposDetalle .= str_repeat("\t", 3) . '$("#' . $columna->getNombreColumna() . '").val(\'\');' . "\n";
-                            } elseif ($columna->isAutomaticoGuardar()) {
-                                $valor = $columna->getValorAutomaticoGuardar();
-                            } elseif ($columna->isFormulaGuardar()) {
-                                $valor = '0';
-                                $this->contenidoLimpiarCamposDetalle .= str_repeat("\t", 3) . '$("#' . $columna->getNombreColumna() . '").val(0);' . "\n";
-                            } elseif($columna->isAutoincrementalGuardar()) {
-                                $valor = '{{$' . $columna->getNombreColumna() . '_autoincremental ?? \'\'}}';
-                            }
 
-                            $campo = str_replace('$VALOR$', $valor, $campo);
+                                if ($columna->isCampoDeTextoGuardar()) {
+                                    $valor = '';
+                                    $this->contenidoLimpiarCamposDetalle .= str_repeat("\t", 3) . '$("#' . $columna->getNombreColumna() . '").val(\'\');' . "\n";
+                                } elseif ($columna->isAutomaticoGuardar()) {
+                                    $valor = $columna->getValorAutomaticoGuardar();
+                                } elseif ($columna->isFormulaGuardar()) {
+                                    $valor = '0';
+                                    $this->contenidoLimpiarCamposDetalle .= str_repeat("\t", 3) . '$("#' . $columna->getNombreColumna() . '").val(0);' . "\n";
+                                } elseif ($columna->isAutoincrementalGuardar()) {
+                                    $valor = '{{$' . $columna->getNombreColumna() . '_autoincremental ?? \'\'}}';
+                                }
+
+                                $campo = str_replace('$VALOR$', $valor, $campo);
+
+                            }
 
                         }
 
+                        $campo .= str_repeat("\t", $cantidadIndentacion + 1) . '</div>' . "\n";
+
                     }
 
-                    $this->definicionVariablesJsDetalle .= str_repeat("\t", 4) . "var $nombreColumna = $(\"#$nombreColumna\").val();" . "\n";
-                    $this->asignacionVariablesJsDetalle .= str_repeat("\t", 6) . "$nombreColumna: $nombreColumna,\n";
-                    $this->cabeceraTablaDetalle .= str_repeat("\t", 12) . '<th>' . $nombreNatural . '</th>' . "\n";
+                    //para detalle
+                    $valorPorDefecto = '';
 
-
-                    if ($nombreColumna === $idTablaAuxiliar) {
-                        $nombreFilaTabla = 'campo_referente';
+                    if ($columna->isCampoDeTextoGuardar() || $columna->isConjuntoDeValoresGuardar()) {
+                        $valorPorDefecto = "$(\"#$nombreColumna\").val()";
+                    } else if ($columna->isAutomaticoGuardar()) {
+                        $valorPorDefecto = "'" . $columna->getValorAutomaticoGuardar() . "'";
+                    } else if ($columna->isFormulaGuardar()) {
+                        $valorPorDefecto = "calcular_" . $columna->getNombreColumna() . "()";
                     } else {
-                        $nombreFilaTabla = $nombreColumna;
+                        $valorPorDefecto = 'null';
                     }
 
-                    $this->filasTablaDetalle .= str_repeat("\t", 5) . "\"<td>\" + detalles[i].$nombreFilaTabla + \"</td>\" +" . "\n";
+                    $this->definicionVariablesJsDetalle .= str_repeat("\t", 4) . "var $nombreColumna = ${valorPorDefecto};" . "\n";
+                    $this->asignacionVariablesJsDetalle .= str_repeat("\t", 6) . "$nombreColumna: $nombreColumna,\n";
 
-                    $campo .= str_repeat("\t", $cantidadIndentacion + 1) . '</div>' . "\n";
+                    if ($columna->isCampoMostrable()) {
+                        $this->cabeceraTablaDetalle .= str_repeat("\t", 12) . '<th>' . $nombreNatural . '</th>' . "\n";
+
+                        if ($nombreColumna === $idTablaAuxiliar) {
+                            $nombreFilaTabla = 'campo_referente';
+                        } else {
+                            $nombreFilaTabla = $nombreColumna;
+                        }
+
+                        $this->filasTablaDetalle .= str_repeat("\t", 5) . "\"<td>\" + detalles[i].$nombreFilaTabla + \"</td>\" +" . "\n";
+                    }
+
+
                 }
 
                 if (count($columnas) - ($i += 1) <= 0) {

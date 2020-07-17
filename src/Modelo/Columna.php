@@ -62,7 +62,7 @@ class Columna {
     /**
      * @var bool
      */
-    private $campoGuardable;
+    private $campoMostrable;
 
     /**
      * @var bool
@@ -335,15 +335,15 @@ class Columna {
     /**
      * @return bool
      */
-    public function isCampoGuardable(): bool {
-        return $this->campoGuardable;
+    public function isCampoMostrable(): bool {
+        return $this->campoMostrable;
     }
 
     /**
-     * @param bool $campoGuardable
+     * @param bool $campoMostrable
      */
-    public function setCampoGuardable(bool $campoGuardable): void {
-        $this->campoGuardable = $campoGuardable;
+    public function setCampoMostrable(bool $campoMostrable): void {
+        $this->campoMostrable = $campoMostrable;
     }
 
     /**

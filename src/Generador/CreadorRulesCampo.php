@@ -39,7 +39,7 @@ class CreadorRulesCampo {
 
             if ($esParaGuardar || (!$esParaGuardar && $tabla->isFormActualizarIgualQueGuardar())) {
                 if (($columna->getNombreColumna() === $tabla->getClavePrimaria() && $columna->isAutoIncrement())
-                    || !$columna->isCampoGuardable()) {
+                    || !$columna->isCampoMostrable()) {
                     continue;
                 }
             } else {

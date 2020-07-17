@@ -20,7 +20,7 @@ class CreadorContenidoAjax {
             }
 
             if ($esParaGuardar || (!$esParaGuardar && $tabla->isFormActualizarIgualQueGuardar())) {
-                if ($columna->isCampoGuardable()) {
+                if ($columna->isCampoMostrable()) {
                     $contenido .= "                    $nombreColumna: $(\"#$nombreColumna\").val()";
                     if ($columna->getTipo() === 'date') {
                         $contenido .= ".split(\"/\").reverse().join(\"-\")";

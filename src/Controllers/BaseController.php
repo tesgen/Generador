@@ -587,7 +587,7 @@ class BaseController extends Controller {
                 $columna->setNombreNatural($c['nombreNatural']);
                 $columna->setVisibleEnTabla($c['visibleEnTabla']);
                 $columna->setVisibleEnReporte($c['visibleEnReporte']);
-                $columna->setCampoGuardable($c['campoGuardable']);
+                $columna->setCampoMostrable($c['campoGuardable']);
                 $columna->setVisibleEnFormularioActualizar($c['visibleEnFormularioActualizar']);
                 $columna->setCampoActualizable($c['campoActualizable']);
                 $columna->setCampoDeTextoGuardar($c['campoDeTextoGuardar']);

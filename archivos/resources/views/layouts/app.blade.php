@@ -102,5 +102,13 @@
 <script src="{{asset('js/messages.es-es.js')}}"></script>
 @yield('scripts')
 
+<script>
+
+    $(function () {
+        $('select').selectize();
+    });
+
+</script>
+
 </body>
 </html>

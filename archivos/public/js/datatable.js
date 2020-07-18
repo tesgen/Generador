@@ -63,7 +63,7 @@ $(document).ready(function () {
                     titleAttr: 'Exportar a PDF',
                     className: 'btn btn-danger btn-app export pdf',
                     exportOptions: {
-                        columns: [0, 1]
+                        columns: typeof columnasVisiblesReporte === 'undefined' ? [0, 1, 2] : columnasVisiblesReporte
                     },
                     customize: function (doc) {
 

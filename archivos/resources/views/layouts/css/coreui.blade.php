@@ -4,3 +4,4 @@
     <link rel="stylesheet" href="{{asset('css/font-awesome-4.4.7.css')}}">
     <link rel="stylesheet" href="{{asset('css/flag-icon.min-3.3.0.css')}}">
     <link rel="stylesheet" href="{{asset('css/simple-line-icons-2.4.1.css')}}">
+    <link rel="stylesheet" href="{{asset('css/selectize.css')}}">

@@ -100,6 +100,7 @@
 <script src="{{asset('js/mensaje.js')}}"></script>
 <script src="{{asset('js/gijgo.min.js')}}"></script>
 <script src="{{asset('js/messages.es-es.js')}}"></script>
+<script src="{{asset('js/selectize.js')}}"></script>
 @yield('scripts')
 
 <script>

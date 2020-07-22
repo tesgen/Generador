@@ -666,7 +666,7 @@
 
                 var nombreColumna = row.cells[columnaNombreColumna].innerText;
                 var nombreNatural = row.cells[columnaNombreNatural].innerText;
-                // nombreNatural = nombreNatural.replace(/\u00A0/, " ").trim();
+                nombreNatural = nombreNatural.replace(/\u00A0/, " ").trim();
 
                 if (tablaSeleccionada.columnas[j].nombreColumna === nombreColumna) {
 

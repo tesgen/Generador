@@ -11,17 +11,17 @@ class CreadorContenidoCamposEditar {
     /**
      * @var string
      */
-    private $contenidoLimpiarCamposDetalle = '';
+//    private $contenidoLimpiarCamposDetalle = '';
 
     /**
      * @var string
      */
-    private $definicionVariablesJsDetalle = '';
+//    private $definicionVariablesJsDetalle = '';
 
     /**
      * @var string
      */
-    private $asignacionVariablesJsDetalle = '';
+//    private $asignacionVariablesJsDetalle = '';
 
     /**
      * @var string
@@ -138,7 +138,7 @@ class CreadorContenidoCamposEditar {
                                 ' ?? \'\'}}" type="text" id="' . $columna->getNombreColumna() . '" readonly>' . "\n";
                         }
 
-                        $this->contenidoLimpiarCamposDetalle .= str_repeat("\t", 3) . '$("#' . $columna->getNombreColumna() . '").prop(\'selectedIndex\', 0);' . "\n";
+//                        $this->contenidoLimpiarCamposDetalle .= str_repeat("\t", 3) . '$("#' . $columna->getNombreColumna() . '").prop(\'selectedIndex\', 0);' . "\n";
 
                     } else {
 
@@ -160,7 +160,7 @@ class CreadorContenidoCamposEditar {
                             }
 
                             $campo .= str_repeat("\t", $cantidadIndentacion + 1) . '</select>' . "\n";
-                            $this->contenidoLimpiarCamposDetalle .= str_repeat("\t", 3) . '$("#' . $columna->getNombreColumna() . '").prop(\'selectedIndex\', 0);' . "\n";
+//                            $this->contenidoLimpiarCamposDetalle .= str_repeat("\t", 3) . '$("#' . $columna->getNombreColumna() . '").prop(\'selectedIndex\', 0);' . "\n";
 
                         } else {
 
@@ -185,27 +185,30 @@ class CreadorContenidoCamposEditar {
 
                             $valor = '';
 
-                            if ($esIgualQueGuardar) {
+                            if ($columna->getTipo() === 'date') {
+                                $valor = '{{$' . $nombreTabla . '->' . $columna->getNombreColumna() .
+                                    ' == null ? \'\' : date("d/m/Y", strtotime($' . $nombreTabla . '->' . $columna->getNombreColumna() .')) }}';
+                            } else if ($esIgualQueGuardar) {
                                 if ($columna->isCampoDeTextoGuardar()) {
                                     $valor = '{{$' . $nombreTabla . '->' . $columna->getNombreColumna() . ' ?? \'\'}}';
-                                    $this->contenidoLimpiarCamposDetalle .= str_repeat("\t", 3) . '$("#' . $columna->getNombreColumna() . '").val(\'\');' . "\n";
+//                                    $this->contenidoLimpiarCamposDetalle .= str_repeat("\t", 3) . '$("#' . $columna->getNombreColumna() . '").val(\'\');' . "\n";
                                 } elseif ($columna->isAutomaticoGuardar()) {
                                     $valor = $columna->getValorAutomaticoGuardar();
                                 } elseif ($columna->isFormulaGuardar()) {
                                     $valor = '{{$' . $nombreTabla . '->' . $columna->getNombreColumna() . ' ?? \'\'}}';
-                                    $this->contenidoLimpiarCamposDetalle .= str_repeat("\t", 3) . '$("#' . $columna->getNombreColumna() . '").val(0);' . "\n";
+//                                    $this->contenidoLimpiarCamposDetalle .= str_repeat("\t", 3) . '$("#' . $columna->getNombreColumna() . '").val(0);' . "\n";
                                 } else if ($columna->isAutoincrementalGuardar()) {
                                     $valor = '{{$' . $nombreTabla . '->' . $columna->getNombreColumna() . ' ?? \'\'}}';
                                 }
                             } else {
                                 if ($columna->isCampoDeTextoActualizar()) {
                                     $valor = '{{$' . $nombreTabla . '->' . $columna->getNombreColumna() . ' ?? \'\'}}';
-                                    $this->contenidoLimpiarCamposDetalle .= str_repeat("\t", 3) . '$("#' . $columna->getNombreColumna() . '").val(\'\');' . "\n";
+//                                    $this->contenidoLimpiarCamposDetalle .= str_repeat("\t", 3) . '$("#' . $columna->getNombreColumna() . '").val(\'\');' . "\n";
                                 } elseif ($columna->isAutomaticoActualizar()) {
                                     $valor = $columna->getValorAutomaticoActualizar();
                                 } elseif ($columna->isFormulaActualizar()) {
                                     $valor = '{{$' . $nombreTabla . '->' . $columna->getNombreColumna() . ' ?? \'\'}}';
-                                    $this->contenidoLimpiarCamposDetalle .= str_repeat("\t", 3) . '$("#' . $columna->getNombreColumna() . '").val(0);' . "\n";
+//                                    $this->contenidoLimpiarCamposDetalle .= str_repeat("\t", 3) . '$("#' . $columna->getNombreColumna() . '").val(0);' . "\n";
                                 }
                             }
 
@@ -215,8 +218,8 @@ class CreadorContenidoCamposEditar {
 
                     }
 
-                    $this->definicionVariablesJsDetalle .= str_repeat("\t", 4) . "var $nombreColumna = $(\"#$nombreColumna\").val();" . "\n";
-                    $this->asignacionVariablesJsDetalle .= str_repeat("\t", 6) . "$nombreColumna: $nombreColumna,\n";
+//                    $this->definicionVariablesJsDetalle .= str_repeat("\t", 4) . "var $nombreColumna = $(\"#$nombreColumna\").val();" . "\n";
+//                    $this->asignacionVariablesJsDetalle .= str_repeat("\t", 6) . "$nombreColumna: $nombreColumna,\n";
                     $this->cabeceraTablaDetalle .= str_repeat("\t", 12) . '<th>' . $nombreNatural . '</th>' . "\n";
 
                     if ($nombreColumna === $idTablaAuxiliar) {
@@ -243,7 +246,7 @@ class CreadorContenidoCamposEditar {
             $campo .= str_repeat("\t", $cantidadIndentacion) . '</div>' . "\n";
         }
 
-        if (/*!$tabla->isMaestro() && */!$tabla->isDetalle()) {
+        if (/*!$tabla->isMaestro() && */ !$tabla->isDetalle()) {
             $campo .= str_repeat("\t", $cantidadIndentacion) . '<div class="form-row">' . "\n";
             $campo .= str_repeat("\t", $cantidadIndentacion + 1) . '<div class="form-group col-sm-12">' . "\n";
             $campo .= str_repeat("\t", $cantidadIndentacion + 2) . '<button type="submit" form="form" id="boton_submit" class="btn btn-primary">Aceptar</button>' . "\n";
@@ -255,26 +258,26 @@ class CreadorContenidoCamposEditar {
         return $campo;
     }
 
-    /**
-     * @return string
-     */
-    public function getContenidoLimpiarCamposDetalle(): string {
-        return $this->contenidoLimpiarCamposDetalle;
-    }
+//    /**
+//     * @return string
+//     */
+//    public function getContenidoLimpiarCamposDetalle(): string {
+//        return $this->contenidoLimpiarCamposDetalle;
+//    }
 
-    /**
-     * @return string
-     */
-    public function getDefinicionVariablesJsDetalle(): string {
-        return $this->definicionVariablesJsDetalle;
-    }
+//    /**
+//     * @return string
+//     */
+//    public function getDefinicionVariablesJsDetalle(): string {
+//        return $this->definicionVariablesJsDetalle;
+//    }
 
-    /**
-     * @return string
-     */
-    public function getAsignacionVariablesJsDetalle(): string {
-        return $this->asignacionVariablesJsDetalle;
-    }
+//    /**
+//     * @return string
+//     */
+//    public function getAsignacionVariablesJsDetalle(): string {
+//        return $this->asignacionVariablesJsDetalle;
+//    }
 
     /**
      * @return string
